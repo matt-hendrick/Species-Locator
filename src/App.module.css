@@ -1,0 +1,18 @@
+.App {
+  margin-top: 10px;
+}
+
+.Form {
+  padding-bottom: 15px;
+  width: 22em;
+}
+
+@media only screen and (max-width: 600px) {
+  .Form {
+    width: 65%;
+  }
+}
+
+/* .Footer {
+  padding-top: 5vh;
+} */

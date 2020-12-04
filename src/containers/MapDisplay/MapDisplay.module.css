@@ -1,0 +1,9 @@
+.MapID {
+  height: 67vh;
+}
+
+@media only screen and (max-width: 600px) {
+  .MapID {
+    height: 50vh;
+  }
+}
