@@ -4,6 +4,7 @@ const initialState = {
   locationSelected: null,
   speciesSelected: null,
   userCoordinates: null,
+  error: null,
 };
 
 const updateObject = (oldObject, updatedProperties) => {
