@@ -18,7 +18,7 @@ function RecentObservations(props) {
   useEffect(() => {
     setIsLoading(true);
     if (!speciesSelected && !locationSelected && !userCoordinates) {
-      // taxon_id #1 is "Animals". If the taxon_id param is removed, will display all observed species
+      // taxon_id #1 is "Animals". If the taxon_id param is removed, will display all recently observed species
       axios
         .get(
           'https://api.inaturalist.org/v1/observations?taxon_id=' +
@@ -29,9 +29,7 @@ function RecentObservations(props) {
           setObservationData(response);
           setIsLoading(false);
         });
-    }
-
-    if (speciesSelected && !locationSelected & !userCoordinates) {
+    } else if (speciesSelected && !locationSelected & !userCoordinates) {
       axios
         .get(
           'https://api.inaturalist.org/v1/observations?taxon_id=' +
@@ -42,9 +40,7 @@ function RecentObservations(props) {
           setObservationData(response);
           setIsLoading(false);
         });
-    }
-
-    if (!speciesSelected && locationSelected && locationSelected[0]) {
+    } else if (!speciesSelected && locationSelected && locationSelected[0]) {
       axios
         .get(
           'https://api.inaturalist.org/v1/observations?taxon_id=' +
@@ -59,9 +55,7 @@ function RecentObservations(props) {
           setObservationData(response);
           setIsLoading(false);
         });
-    }
-
-    if (speciesSelected && locationSelected) {
+    } else if (speciesSelected && locationSelected) {
       axios
         .get(
           'https://api.inaturalist.org/v1/observations?taxon_id=' +
@@ -76,9 +70,7 @@ function RecentObservations(props) {
           setObservationData(response);
           setIsLoading(false);
         });
-    }
-
-    if (!speciesSelected && userCoordinates) {
+    } else if (!speciesSelected && userCoordinates) {
       axios
         .get(
           'https://api.inaturalist.org/v1/observations?taxon_id=' +
@@ -93,9 +85,7 @@ function RecentObservations(props) {
           setObservationData(response);
           setIsLoading(false);
         });
-    }
-
-    if (speciesSelected && userCoordinates) {
+    } else if (speciesSelected && userCoordinates) {
       axios
         .get(
           'https://api.inaturalist.org/v1/observations?taxon_id=' +
@@ -212,8 +202,7 @@ function RecentObservations(props) {
             within 50 kilometers of {locationSelected[0]?.formatted_address}.
           </Typography>
         );
-      }
-      if (userCoordinates) {
+      } else if (userCoordinates) {
         display = (
           <Typography gutterBottom variant="h4" component="h4">
             No recent observations{' '}

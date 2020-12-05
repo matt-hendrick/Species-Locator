@@ -43,7 +43,7 @@ function SpeciesForm(props) {
     return () => clearTimeout(timeoutId);
   }, [loading, userSpeciesQuery]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!open) {
       setOptions([]);
     }

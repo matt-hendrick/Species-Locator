@@ -51,7 +51,7 @@ function GoogleMapsLocationForm(props) {
     return () => clearTimeout(timeoutId);
   }, [loading, userLocationQuery]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!open) {
       setOptions([]);
     }

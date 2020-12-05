@@ -26,9 +26,7 @@ function MapDisplay(props) {
         />
       </MapContainer>
     );
-  }
-
-  if (speciesSelected && !locationSelected && !userCoordinates) {
+  } else if (speciesSelected && !locationSelected && !userCoordinates) {
     mapKey = coordinates + speciesSelected.id;
     leafletDisplay = (
       <MapContainer
@@ -48,9 +46,7 @@ function MapDisplay(props) {
         />
       </MapContainer>
     );
-  }
-
-  if (speciesSelected && locationSelected?.length > 0) {
+  } else if (speciesSelected && locationSelected?.length > 0) {
     coordinates = [
       locationSelected[0]?.geometry.location.lat,
       locationSelected[0]?.geometry.location.lng,
@@ -93,9 +89,7 @@ function MapDisplay(props) {
         />
       </MapContainer>
     );
-  }
-
-  if (speciesSelected && userCoordinates) {
+  } else if (speciesSelected && userCoordinates) {
     coordinates = [userCoordinates[0], userCoordinates[1]];
     mapKey = coordinates + speciesSelected.id;
     leafletDisplay = (
