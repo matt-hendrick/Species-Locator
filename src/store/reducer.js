@@ -36,6 +36,13 @@ const updateUserCoordinates = (state, action) => {
   });
 };
 
+const updateError = (state, action) => {
+  const newError = action.error;
+  return updateObject(state, {
+    error: newError,
+  });
+};
+
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.UPDATE_SPECIES_SELECTED:
@@ -44,6 +51,8 @@ const reducer = (state = initialState, action) => {
       return updateLocationSelected(state, action);
     case actionTypes.UPDATE_USER_COORDINATES:
       return updateUserCoordinates(state, action);
+    case actionTypes.UPDATE_ERROR:
+      return updateError(state, action);
     default:
       return state;
   }

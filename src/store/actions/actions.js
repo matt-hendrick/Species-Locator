@@ -22,6 +22,13 @@ export const updateUserCoordinates = (userCoordinates) => {
   };
 };
 
+export const updateError = (error) => {
+  return {
+    type: actionTypes.UPDATE_ERROR,
+    error: error,
+  };
+};
+
 export const getCoordinatesFromGeocodeAPI = (locationSelected) => {
   return (dispatch) => {
     if (locationSelected) {
@@ -33,7 +40,7 @@ export const getCoordinatesFromGeocodeAPI = (locationSelected) => {
           dispatch(updateLocationSelected(data.data.results));
         })
         .catch((error) => {
-          console.log(error);
+          dispatch(updateError(error.message));
         });
     } else {
       return undefined;

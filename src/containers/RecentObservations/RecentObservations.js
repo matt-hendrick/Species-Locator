@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
+import * as actions from '../../store/actions/index';
 
 import Card from '../../components/Card/Card';
 
@@ -13,7 +14,12 @@ function RecentObservations(props) {
   const [observationData, setObservationData] = useState(null);
   const [isLoading, setIsLoading] = useState(null);
 
-  const { locationSelected, speciesSelected, userCoordinates } = props;
+  const {
+    locationSelected,
+    speciesSelected,
+    userCoordinates,
+    onUpdateError,
+  } = props;
 
   useEffect(() => {
     setIsLoading(true);
@@ -28,6 +34,9 @@ function RecentObservations(props) {
         .then((response) => {
           setObservationData(response);
           setIsLoading(false);
+        })
+        .catch((error) => {
+          onUpdateError(error.message);
         });
     } else if (speciesSelected && !locationSelected & !userCoordinates) {
       axios
@@ -39,6 +48,9 @@ function RecentObservations(props) {
         .then((response) => {
           setObservationData(response);
           setIsLoading(false);
+        })
+        .catch((error) => {
+          onUpdateError(error.message);
         });
     } else if (!speciesSelected && locationSelected && locationSelected[0]) {
       axios
@@ -54,6 +66,9 @@ function RecentObservations(props) {
         .then((response) => {
           setObservationData(response);
           setIsLoading(false);
+        })
+        .catch((error) => {
+          onUpdateError(error.message);
         });
     } else if (speciesSelected && locationSelected) {
       axios
@@ -69,6 +84,9 @@ function RecentObservations(props) {
         .then((response) => {
           setObservationData(response);
           setIsLoading(false);
+        })
+        .catch((error) => {
+          onUpdateError(error.message);
         });
     } else if (!speciesSelected && userCoordinates) {
       axios
@@ -84,6 +102,9 @@ function RecentObservations(props) {
         .then((response) => {
           setObservationData(response);
           setIsLoading(false);
+        })
+        .catch((error) => {
+          onUpdateError(error.message);
         });
     } else if (speciesSelected && userCoordinates) {
       axios
@@ -99,6 +120,9 @@ function RecentObservations(props) {
         .then((response) => {
           setObservationData(response);
           setIsLoading(false);
+        })
+        .catch((error) => {
+          onUpdateError(error.message);
         });
     }
   }, [speciesSelected, locationSelected, userCoordinates]);
@@ -236,4 +260,10 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(RecentObservations);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onUpdateError: (error) => dispatch(actions.updateError(error)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(RecentObservations);

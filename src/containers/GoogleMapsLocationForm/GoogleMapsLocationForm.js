@@ -14,7 +14,7 @@ function GoogleMapsLocationForm(props) {
   const [options, setOptions] = useState([]);
   const loading = open && options.length === 0;
 
-  const { onGetCoordinatesFromGeocodeAPI } = props;
+  const { onGetCoordinatesFromGeocodeAPI, onUpdateError } = props;
 
   useEffect(() => {
     let active = true;
@@ -37,6 +37,9 @@ function GoogleMapsLocationForm(props) {
               if (active && response) {
                 setOptions(response.map((data) => data));
               }
+            })
+            .catch((error) => {
+              onUpdateError(error.message);
             });
         })();
 
@@ -49,7 +52,7 @@ function GoogleMapsLocationForm(props) {
     // debouncing so API called only if user has stopped typing for one second
     const timeoutId = setTimeout(() => requestDataFromAPI(), 1000);
     return () => clearTimeout(timeoutId);
-  }, [loading, userLocationQuery]);
+  }, [loading, userLocationQuery, onUpdateError]);
 
   useEffect(() => {
     if (!open) {
@@ -113,6 +116,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     onGetCoordinatesFromGeocodeAPI: (locationSelected) =>
       dispatch(actions.getCoordinatesFromGeocodeAPI(locationSelected)),
+    onUpdateError: (error) => dispatch(actions.updateError(error)),
   };
 };
 

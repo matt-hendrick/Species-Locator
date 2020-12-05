@@ -14,7 +14,7 @@ function SpeciesForm(props) {
   const [options, setOptions] = useState([]);
   const loading = open && options.length === 0;
 
-  const { onUpdateSpeciesSelected } = props;
+  const { onUpdateSpeciesSelected, onUpdateError } = props;
 
   useEffect(() => {
     let response = null;
@@ -34,6 +34,9 @@ function SpeciesForm(props) {
             if (response?.data.results) {
               setOptions(response.data.results.map((data) => data));
             }
+          })
+          .catch((error) => {
+            onUpdateError(error.message);
           });
       }
     };
@@ -41,7 +44,7 @@ function SpeciesForm(props) {
     // debouncing so API called only if user has stopped typing for one second
     const timeoutId = setTimeout(() => requestDataFromAPI(), 1000);
     return () => clearTimeout(timeoutId);
-  }, [loading, userSpeciesQuery]);
+  }, [loading, userSpeciesQuery, onUpdateError]);
 
   useEffect(() => {
     if (!open) {
@@ -110,6 +113,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     onUpdateSpeciesSelected: (speciesSelected) =>
       dispatch(actions.updateSpeciesSelected(speciesSelected)),
+    onUpdateError: (error) => dispatch(actions.updateError(error)),
   };
 };
 
