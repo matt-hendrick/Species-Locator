@@ -141,7 +141,7 @@ function RecentObservations(props) {
           onUpdateError(error.message);
         });
     }
-  }, [speciesSelected, locationSelected, userCoordinates]);
+  }, [speciesSelected, locationSelected, userCoordinates, onUpdateError]);
 
   // iNaturalist species names are sometimes lowercase so title case function is needed
   const toTitleCase = (str) => {
