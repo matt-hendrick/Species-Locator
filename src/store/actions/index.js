@@ -3,4 +3,5 @@ export {
   getCoordinatesFromGeocodeAPI,
   updateUserCoordinates,
   updateError,
+  updatePageNumber,
 } from './actions';

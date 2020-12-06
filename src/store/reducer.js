@@ -5,6 +5,7 @@ const initialState = {
   speciesSelected: null,
   userCoordinates: null,
   error: null,
+  pageNumber: null,
 };
 
 const updateObject = (oldObject, updatedProperties) => {
@@ -18,6 +19,7 @@ const updateSpeciesSelected = (state, action) => {
   const newSpeciesSelected = action.speciesSelected;
   return updateObject(state, {
     speciesSelected: newSpeciesSelected,
+    pageNumber: null,
   });
 };
 
@@ -26,6 +28,7 @@ const updateLocationSelected = (state, action) => {
   return updateObject(state, {
     locationSelected: newLocationSelected,
     userCoordinates: null,
+    pageNumber: null,
   });
 };
 
@@ -34,6 +37,7 @@ const updateUserCoordinates = (state, action) => {
   return updateObject(state, {
     userCoordinates: newUserCoordinates,
     locationSelected: null,
+    pageNumber: null,
   });
 };
 
@@ -41,6 +45,14 @@ const updateError = (state, action) => {
   const newError = action.error;
   return updateObject(state, {
     error: newError,
+    pageNumber: null,
+  });
+};
+
+const updatePageNumber = (state, action) => {
+  const newPageNumber = action.pageNumber;
+  return updateObject(state, {
+    pageNumber: newPageNumber,
   });
 };
 
@@ -54,6 +66,8 @@ const reducer = (state = initialState, action) => {
       return updateUserCoordinates(state, action);
     case actionTypes.UPDATE_ERROR:
       return updateError(state, action);
+    case actionTypes.UPDATE_PAGE_NUMBER:
+      return updatePageNumber(state, action);
     default:
       return state;
   }

@@ -29,6 +29,13 @@ export const updateError = (error) => {
   };
 };
 
+export const updatePageNumber = (pageNumber) => {
+  return {
+    type: actionTypes.UPDATE_PAGE_NUMBER,
+    pageNumber: pageNumber,
+  };
+};
+
 export const getCoordinatesFromGeocodeAPI = (locationSelected) => {
   return (dispatch) => {
     if (locationSelected) {

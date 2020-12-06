@@ -13,7 +13,6 @@ import Pagination from '@material-ui/lab/Pagination';
 
 function RecentObservations(props) {
   const [observationData, setObservationData] = useState(null);
-  const [pageNumber, setPageNumber] = useState(null);
   const [isLoading, setIsLoading] = useState(null);
 
   const {
@@ -21,6 +20,8 @@ function RecentObservations(props) {
     speciesSelected,
     userCoordinates,
     onUpdateError,
+    onUpdatePageNumber,
+    pageNumber,
   } = props;
 
   useEffect(() => {
@@ -173,7 +174,7 @@ function RecentObservations(props) {
   };
 
   const handlePageNumberChange = (event, value) => {
-    setPageNumber(value);
+    onUpdatePageNumber(value);
   };
 
   let display = (
@@ -302,7 +303,7 @@ function RecentObservations(props) {
               justifyContent: 'center',
               paddingTop: '8px',
             }}
-            page={pageNumber}
+            page={pageNumber ? pageNumber : 1}
           />
         ) : null}
       </Container>
@@ -315,12 +316,15 @@ const mapStateToProps = (state) => {
     locationSelected: state.locationSelected,
     speciesSelected: state.speciesSelected,
     userCoordinates: state.userCoordinates,
+    pageNumber: state.pageNumber,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     onUpdateError: (error) => dispatch(actions.updateError(error)),
+    onUpdatePageNumber: (pageNumber) =>
+      dispatch(actions.updatePageNumber(pageNumber)),
   };
 };
 
