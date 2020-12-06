@@ -9,9 +9,11 @@ import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import Pagination from '@material-ui/lab/Pagination';
 
 function RecentObservations(props) {
   const [observationData, setObservationData] = useState(null);
+  const [pageNumber, setPageNumber] = useState(null);
   const [isLoading, setIsLoading] = useState(null);
 
   const {
@@ -32,6 +34,8 @@ function RecentObservations(props) {
             quality_grade: 'research',
             order_by: 'observed_on',
             photos: true,
+            per_page: 28,
+            page: pageNumber,
           },
         })
         .then((response) => {
@@ -49,6 +53,8 @@ function RecentObservations(props) {
             quality_grade: 'research',
             order_by: 'observed_on',
             photos: true,
+            per_page: 28,
+            page: pageNumber,
           },
         })
         .then((response) => {
@@ -70,6 +76,8 @@ function RecentObservations(props) {
             quality_grade: 'research',
             order_by: 'observed_on',
             photos: true,
+            per_page: 28,
+            page: pageNumber,
           },
         })
         .then((response) => {
@@ -90,6 +98,8 @@ function RecentObservations(props) {
             quality_grade: 'research',
             order_by: 'observed_on',
             photos: true,
+            per_page: 28,
+            page: pageNumber,
           },
         })
         .then((response) => {
@@ -111,6 +121,8 @@ function RecentObservations(props) {
             quality_grade: 'research',
             order_by: 'observed_on',
             photos: true,
+            per_page: 28,
+            page: pageNumber,
           },
         })
         .then((response) => {
@@ -131,6 +143,8 @@ function RecentObservations(props) {
             quality_grade: 'research',
             order_by: 'observed_on',
             photos: true,
+            per_page: 28,
+            page: pageNumber,
           },
         })
         .then((response) => {
@@ -141,7 +155,13 @@ function RecentObservations(props) {
           onUpdateError(error.message);
         });
     }
-  }, [speciesSelected, locationSelected, userCoordinates, onUpdateError]);
+  }, [
+    speciesSelected,
+    locationSelected,
+    userCoordinates,
+    onUpdateError,
+    pageNumber,
+  ]);
 
   // iNaturalist species names are sometimes lowercase so title case function is needed
   const toTitleCase = (str) => {
@@ -150,6 +170,10 @@ function RecentObservations(props) {
       str[i] = str[i].charAt(0).toUpperCase() + str[i].slice(1);
     }
     return str.join(' ');
+  };
+
+  const handlePageNumberChange = (event, value) => {
+    setPageNumber(value);
   };
 
   let display = (
@@ -234,7 +258,8 @@ function RecentObservations(props) {
                     : speciesSelected.name
                 }`
               : null}{' '}
-            within 50 kilometers of {locationSelected[0]?.formatted_address}.
+            found within 50 kilometers of{' '}
+            {locationSelected[0]?.formatted_address}.
           </Typography>
         );
       } else if (userCoordinates) {
@@ -248,7 +273,7 @@ function RecentObservations(props) {
                     : speciesSelected.name
                 }`
               : null}{' '}
-            within 50 kilometers of your location ({userCoordinates[0]},{' '}
+            found within 50 kilometers of your location ({userCoordinates[0]},{' '}
             {userCoordinates[1]}).
           </Typography>
         );
@@ -258,7 +283,29 @@ function RecentObservations(props) {
 
   return (
     <React.Fragment>
-      <Container>{display}</Container>
+      <Container>
+        {display}
+        {observationData?.data.results[0] &&
+        !isLoading &&
+        observationData?.data.total_results / 28 > 1 ? (
+          <Pagination
+            // checks if total number of pages exceeds 100, max number of pages set to 100
+            count={
+              observationData?.data.total_results / 28 > 100
+                ? 100
+                : Math.round(observationData?.data.total_results / 28)
+            }
+            color="primary"
+            onChange={handlePageNumberChange}
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              paddingTop: '8px',
+            }}
+            page={pageNumber}
+          />
+        ) : null}
+      </Container>
     </React.Fragment>
   );
 }
