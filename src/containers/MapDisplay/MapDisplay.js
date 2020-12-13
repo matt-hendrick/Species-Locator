@@ -17,7 +17,7 @@ function MapDisplay(props) {
         key={coordinates}
         className={classes.MapID}
         center={coordinates}
-        zoom={14}
+        zoom={2}
         scrollWheelZoom={false}
       >
         <TileLayer
@@ -33,7 +33,7 @@ function MapDisplay(props) {
         key={mapKey}
         className={classes.MapID}
         center={coordinates}
-        zoom={14}
+        zoom={2}
         scrollWheelZoom={false}
       >
         <TileLayer

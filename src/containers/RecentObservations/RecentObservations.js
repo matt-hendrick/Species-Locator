@@ -164,7 +164,7 @@ function RecentObservations(props) {
     pageNumber,
   ]);
 
-  // iNaturalist species names are sometimes lowercase so title case function is needed
+  // iNaturalist species names are sometimes lowercase so a title case function is needed
   const toTitleCase = (str) => {
     str = str.toLowerCase().split(' ');
     for (var i = 0; i < str.length; i++) {
@@ -200,7 +200,7 @@ function RecentObservations(props) {
     display = (
       <Grid container spacing={2}>
         {observationData.data.results.map((data) => {
-          // nameOfSpecies variable created as some observations initially do not have the correct name
+          // nameOfSpecies variable created as some observations initially do not have the correct name (users don't always know the name of the species that they've seen)
           let nameOfSpecies = data.identifications[0].taxon
             .preferred_common_name
             ? toTitleCase(data.identifications[0].taxon.preferred_common_name)
@@ -290,7 +290,7 @@ function RecentObservations(props) {
         !isLoading &&
         observationData?.data.total_results / 28 > 1 ? (
           <Pagination
-            // checks if total number of pages exceeds 100, max number of pages set to 100
+            // if total number of pages exceeds 100, max number of pages set to 100
             count={
               observationData?.data.total_results / 28 > 100
                 ? 100
@@ -303,6 +303,7 @@ function RecentObservations(props) {
               justifyContent: 'center',
               paddingTop: '8px',
             }}
+            // if pageNumber is null, sets page to 1. Ensures that page 1 is correctly highlighted on initial search
             page={pageNumber ? pageNumber : 1}
           />
         ) : null}
