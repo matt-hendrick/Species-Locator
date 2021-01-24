@@ -1,11 +1,14 @@
 import React from 'react';
 import { MapContainer, TileLayer } from 'react-leaflet';
-
 import * as classes from './MapDisplay.module.css';
-import { connect } from 'react-redux';
 
-function MapDisplay(props) {
-  const { locationSelected, speciesSelected, userCoordinates } = props;
+// Redux
+import { useSelector } from 'react-redux';
+
+function MapDisplay() {
+  const locationSelected = useSelector((state) => state.locationSelected);
+  const speciesSelected = useSelector((state) => state.speciesSelected);
+  const userCoordinates = useSelector((state) => state.userCoordinates);
 
   let leafletDisplay = null;
   let mapKey = null;
@@ -131,12 +134,4 @@ function MapDisplay(props) {
   return <React.Fragment>{leafletDisplay}</React.Fragment>;
 }
 
-const mapStateToProps = (state) => {
-  return {
-    locationSelected: state.locationSelected,
-    speciesSelected: state.speciesSelected,
-    userCoordinates: state.userCoordinates,
-  };
-};
-
-export default connect(mapStateToProps)(MapDisplay);
+export default MapDisplay;

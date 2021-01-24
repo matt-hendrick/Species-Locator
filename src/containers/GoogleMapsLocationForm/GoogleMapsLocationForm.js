@@ -1,20 +1,25 @@
 import React, { useState, useEffect } from 'react';
-import TextField from '@material-ui/core/TextField';
-import Autocomplete, {
-  createFilterOptions,
-} from '@material-ui/lab/Autocomplete';
-import CircularProgress from '@material-ui/core/CircularProgress';
 import axios from 'axios';
-import { connect } from 'react-redux';
-import * as actions from '../../store/actions/index';
 
-function GoogleMapsLocationForm(props) {
+// Redux
+import { useDispatch } from 'react-redux';
+import {
+  getCoordinatesFromGeocodeAPI,
+  updateError,
+} from '../../store/actions/actions';
+
+// MUI
+import TextField from '@material-ui/core/TextField';
+import Autocomplete from '@material-ui/lab/Autocomplete';
+import CircularProgress from '@material-ui/core/CircularProgress';
+
+function GoogleMapsLocationForm() {
   const [userLocationQuery, setUserLocationQuery] = useState(null);
   const [open, setOpen] = useState(false);
   const [options, setOptions] = useState([]);
   const loading = open && options.length === 0;
 
-  const { onGetCoordinatesFromGeocodeAPI, onUpdateError } = props;
+  const dispatch = useDispatch();
 
   useEffect(() => {
     let active = true;
@@ -39,7 +44,7 @@ function GoogleMapsLocationForm(props) {
               }
             })
             .catch((error) => {
-              onUpdateError(error.message);
+              dispatch(updateError(error.message));
             });
         })();
 
@@ -52,7 +57,7 @@ function GoogleMapsLocationForm(props) {
     // debouncing so API called only if user has stopped typing for one second
     const timeoutId = setTimeout(() => requestDataFromAPI(), 1000);
     return () => clearTimeout(timeoutId);
-  }, [loading, userLocationQuery, onUpdateError]);
+  }, [loading, userLocationQuery]);
 
   useEffect(() => {
     if (!open) {
@@ -61,20 +66,20 @@ function GoogleMapsLocationForm(props) {
   }, [open]);
 
   const userLocationQueryChangedHandler = (event) => {
-    const updatedSpecies = event.target.value;
-    setUserLocationQuery(updatedSpecies);
+    const updatedLocation = event.target.value;
+    setUserLocationQuery(updatedLocation);
+    // clears out options if userLocationQuery has been changed to an empty string
+    if (options !== [] && updatedLocation === '') {
+      setOptions([]);
+    }
   };
-
-  const filterOptions = createFilterOptions({
-    trim: true,
-  });
 
   return (
     <Autocomplete
       id="GoogleMapsLocationForm"
       style={{ textAlign: 'center' }}
       clearOnEscape={true}
-      filterOptions={filterOptions}
+      filterOptions={(options, state) => options}
       open={open}
       onOpen={() => {
         setOpen(true);
@@ -82,7 +87,10 @@ function GoogleMapsLocationForm(props) {
       onClose={() => {
         setOpen(false);
       }}
-      onChange={(option, value) => onGetCoordinatesFromGeocodeAPI(value)}
+      onChange={(option, value) => {
+        dispatch(getCoordinatesFromGeocodeAPI(value));
+        setOptions([]);
+      }}
       getOptionLabel={(option) => option.description}
       options={options}
       loading={loading}
@@ -112,12 +120,4 @@ function GoogleMapsLocationForm(props) {
   );
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    onGetCoordinatesFromGeocodeAPI: (locationSelected) =>
-      dispatch(actions.getCoordinatesFromGeocodeAPI(locationSelected)),
-    onUpdateError: (error) => dispatch(actions.updateError(error)),
-  };
-};
-
-export default connect(null, mapDispatchToProps)(GoogleMapsLocationForm);
+export default GoogleMapsLocationForm;

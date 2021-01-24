@@ -1,4 +1,3 @@
-import { fireEvent } from '@testing-library/react';
 import React from 'react';
 import { render, screen, create } from '../../redux_test-utils';
 import GeoLocationButton from './GeoLocationButton';

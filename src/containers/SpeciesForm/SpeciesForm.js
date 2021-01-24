@@ -1,12 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import TextField from '@material-ui/core/TextField';
-import Autocomplete, {
-  createFilterOptions,
-} from '@material-ui/lab/Autocomplete';
-import CircularProgress from '@material-ui/core/CircularProgress';
 import axios from 'axios';
-import { connect } from 'react-redux';
-import * as actions from '../../store/actions/index';
+
+// Redux
+import { useDispatch } from 'react-redux';
+import {
+  updateSpeciesSelected,
+  updateError,
+} from '../../store/actions/actions';
+
+// MUI
+import TextField from '@material-ui/core/TextField';
+import Autocomplete from '@material-ui/lab/Autocomplete';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 function SpeciesForm(props) {
   const [userSpeciesQuery, setUserSpeciesQuery] = useState(null);
@@ -14,7 +19,7 @@ function SpeciesForm(props) {
   const [options, setOptions] = useState([]);
   const loading = open && options.length === 0;
 
-  const { onUpdateSpeciesSelected, onUpdateError } = props;
+  const dispatch = useDispatch();
 
   useEffect(() => {
     let response = null;
@@ -36,7 +41,7 @@ function SpeciesForm(props) {
             }
           })
           .catch((error) => {
-            onUpdateError(error.message);
+            dispatch(updateError(error.message));
           });
       }
     };
@@ -44,7 +49,7 @@ function SpeciesForm(props) {
     // debouncing so API called only if user has stopped typing for one second
     const timeoutId = setTimeout(() => requestDataFromAPI(), 1000);
     return () => clearTimeout(timeoutId);
-  }, [loading, userSpeciesQuery, onUpdateError]);
+  }, [loading, userSpeciesQuery, dispatch]);
 
   useEffect(() => {
     if (!open) {
@@ -55,18 +60,18 @@ function SpeciesForm(props) {
   const userSpeciesQueryChangedHandler = (event) => {
     const updatedSpecies = event.target.value;
     setUserSpeciesQuery(updatedSpecies);
+    // clears out options if userSpeciesQuery has been changed to an empty string
+    if (options !== [] && updatedSpecies === '') {
+      setOptions([]);
+    }
   };
-
-  const filterOptions = createFilterOptions({
-    trim: true,
-  });
 
   return (
     <Autocomplete
       id="SpeciesForm"
       style={{ textAlign: 'center' }}
       clearOnEscape={true}
-      filterOptions={filterOptions}
+      filterOptions={(options, state) => options}
       open={open}
       onOpen={() => {
         setOpen(true);
@@ -74,7 +79,7 @@ function SpeciesForm(props) {
       onClose={() => {
         setOpen(false);
       }}
-      onChange={(option, value) => onUpdateSpeciesSelected(value)}
+      onChange={(option, value) => dispatch(updateSpeciesSelected(value))}
       // added ternary expression below as some species do not have a "preferred common name"
       getOptionLabel={(option) =>
         option.preferred_common_name
@@ -109,12 +114,4 @@ function SpeciesForm(props) {
   );
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    onUpdateSpeciesSelected: (speciesSelected) =>
-      dispatch(actions.updateSpeciesSelected(speciesSelected)),
-    onUpdateError: (error) => dispatch(actions.updateError(error)),
-  };
-};
-
-export default connect(null, mapDispatchToProps)(SpeciesForm);
+export default SpeciesForm;

@@ -1,170 +1,128 @@
 import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
 import axios from 'axios';
-import * as actions from '../../store/actions/index';
 
-import Card from '../../components/Card/Card';
+// Redux
+import { useSelector, useDispatch } from 'react-redux';
+import { updatePageNumber, updateError } from '../../store/actions/actions';
 
+// MUI
 import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Pagination from '@material-ui/lab/Pagination';
 
-function RecentObservations(props) {
+import Card from '../../components/Card/Card';
+
+function RecentObservations() {
   const [observationData, setObservationData] = useState(null);
   const [isLoading, setIsLoading] = useState(null);
 
-  const {
-    locationSelected,
-    speciesSelected,
-    userCoordinates,
-    onUpdateError,
-    onUpdatePageNumber,
-    pageNumber,
-  } = props;
+  const dispatch = useDispatch();
+
+  const locationSelected = useSelector((state) => state.locationSelected);
+  const speciesSelected = useSelector((state) => state.speciesSelected);
+  const userCoordinates = useSelector((state) => state.userCoordinates);
+  const pageNumber = useSelector((state) => state.pageNumber);
 
   useEffect(() => {
+    // taxon_id #1 is "Animals". If the taxon_id param is removed, will display all recently observed species (including fungi and plants)
+    let params = {
+      taxon_id: 1,
+      quality_grade: 'research',
+      order_by: 'observed_on',
+      photos: true,
+      per_page: 16,
+      page: pageNumber,
+    };
+    const getData = (params) => {
+      axios
+        .get('https://api.inaturalist.org/v1/observations', {
+          params: params,
+        })
+        .then((response) => {
+          setObservationData(response);
+          setIsLoading(false);
+        })
+        .catch((error) => {
+          dispatch(updateError(error.message));
+        });
+    };
     setIsLoading(true);
     if (!speciesSelected && !locationSelected && !userCoordinates) {
-      axios
-        .get('https://api.inaturalist.org/v1/observations', {
-          params: {
-            // taxon_id #1 is "Animals". If the taxon_id param is removed, will display all recently observed species
-            taxon_id: 1,
-            quality_grade: 'research',
-            order_by: 'observed_on',
-            photos: true,
-            per_page: 28,
-            page: pageNumber,
-          },
-        })
-        .then((response) => {
-          setObservationData(response);
-          setIsLoading(false);
-        })
-        .catch((error) => {
-          onUpdateError(error.message);
-        });
+      getData(params);
     } else if (speciesSelected && !locationSelected & !userCoordinates) {
-      axios
-        .get('https://api.inaturalist.org/v1/observations', {
-          params: {
-            taxon_id: speciesSelected.id,
-            quality_grade: 'research',
-            order_by: 'observed_on',
-            photos: true,
-            per_page: 28,
-            page: pageNumber,
-          },
-        })
-        .then((response) => {
-          setObservationData(response);
-          setIsLoading(false);
-        })
-        .catch((error) => {
-          onUpdateError(error.message);
-        });
+      params = {
+        taxon_id: speciesSelected.id,
+        quality_grade: 'research',
+        order_by: 'observed_on',
+        photos: true,
+        per_page: 16,
+        page: pageNumber,
+      };
+      getData(params);
     } else if (!speciesSelected && locationSelected && locationSelected[0]) {
-      axios
-        .get('https://api.inaturalist.org/v1/observations', {
-          params: {
-            // taxon_id #1 is "Animals". If the taxon_id param is removed, will display all recently observed species
-            taxon_id: 1,
-            lat: locationSelected[0].geometry.location.lat,
-            lng: locationSelected[0].geometry.location.lng,
-            radius: 50,
-            quality_grade: 'research',
-            order_by: 'observed_on',
-            photos: true,
-            per_page: 28,
-            page: pageNumber,
-          },
-        })
-        .then((response) => {
-          setObservationData(response);
-          setIsLoading(false);
-        })
-        .catch((error) => {
-          onUpdateError(error.message);
-        });
+      params = {
+        taxon_id: 1,
+        lat: locationSelected[0].geometry.location.lat,
+        lng: locationSelected[0].geometry.location.lng,
+        radius: 50,
+        quality_grade: 'research',
+        order_by: 'observed_on',
+        photos: true,
+        per_page: 16,
+        page: pageNumber,
+      };
+      getData(params);
     } else if (speciesSelected && locationSelected && locationSelected[0]) {
-      axios
-        .get('https://api.inaturalist.org/v1/observations', {
-          params: {
-            taxon_id: speciesSelected.id,
-            lat: locationSelected[0].geometry.location.lat,
-            lng: locationSelected[0].geometry.location.lng,
-            radius: 50,
-            quality_grade: 'research',
-            order_by: 'observed_on',
-            photos: true,
-            per_page: 28,
-            page: pageNumber,
-          },
-        })
-        .then((response) => {
-          setObservationData(response);
-          setIsLoading(false);
-        })
-        .catch((error) => {
-          onUpdateError(error.message);
-        });
+      params = {
+        taxon_id: speciesSelected.id,
+        lat: locationSelected[0].geometry.location.lat,
+        lng: locationSelected[0].geometry.location.lng,
+        radius: 50,
+        quality_grade: 'research',
+        order_by: 'observed_on',
+        photos: true,
+        per_page: 16,
+        page: pageNumber,
+      };
+      getData(params);
     } else if (!speciesSelected && userCoordinates) {
-      axios
-        .get('https://api.inaturalist.org/v1/observations', {
-          params: {
-            // taxon_id #1 is "Animals". If the taxon_id param is removed, will display all recently observed species
-            taxon_id: 1,
-            lat: userCoordinates[0],
-            lng: userCoordinates[1],
-            radius: 50,
-            quality_grade: 'research',
-            order_by: 'observed_on',
-            photos: true,
-            per_page: 28,
-            page: pageNumber,
-          },
-        })
-        .then((response) => {
-          setObservationData(response);
-          setIsLoading(false);
-        })
-        .catch((error) => {
-          onUpdateError(error.message);
-        });
+      params = {
+        taxon_id: 1,
+        lat: userCoordinates[0],
+        lng: userCoordinates[1],
+        radius: 50,
+        quality_grade: 'research',
+        order_by: 'observed_on',
+        photos: true,
+        per_page: 16,
+        page: pageNumber,
+      };
+      getData(params);
     } else if (speciesSelected && userCoordinates) {
-      axios
-        .get('https://api.inaturalist.org/v1/observations', {
-          params: {
-            taxon_id: speciesSelected.id,
-            lat: userCoordinates[0],
-            lng: userCoordinates[1],
-            radius: 50,
-            quality_grade: 'research',
-            order_by: 'observed_on',
-            photos: true,
-            per_page: 28,
-            page: pageNumber,
-          },
-        })
-        .then((response) => {
-          setObservationData(response);
-          setIsLoading(false);
-        })
-        .catch((error) => {
-          onUpdateError(error.message);
-        });
+      params = {
+        taxon_id: speciesSelected.id,
+        lat: userCoordinates[0],
+        lng: userCoordinates[1],
+        radius: 50,
+        quality_grade: 'research',
+        order_by: 'observed_on',
+        photos: true,
+        per_page: 16,
+        page: pageNumber,
+      };
+      getData(params);
     }
   }, [
     speciesSelected,
     locationSelected,
     userCoordinates,
-    onUpdateError,
     pageNumber,
+    dispatch,
   ]);
 
-  // iNaturalist species names are sometimes lowercase so a title case function is needed
+  // iNaturalist species names are sometimes lowercase so a title case function is needed to ensure uniformity
   const toTitleCase = (str) => {
     str = str.toLowerCase().split(' ');
     for (var i = 0; i < str.length; i++) {
@@ -174,7 +132,7 @@ function RecentObservations(props) {
   };
 
   const handlePageNumberChange = (event, value) => {
-    onUpdatePageNumber(value);
+    dispatch(updatePageNumber(value));
   };
 
   let display = (
@@ -288,13 +246,13 @@ function RecentObservations(props) {
         {display}
         {observationData?.data.results[0] &&
         !isLoading &&
-        observationData?.data.total_results / 28 > 1 ? (
+        observationData?.data.total_results / 16 > 1 ? (
           <Pagination
             // if total number of pages exceeds 100, max number of pages set to 100
             count={
-              observationData?.data.total_results / 28 > 100
+              observationData?.data.total_results / 16 > 100
                 ? 100
-                : Math.round(observationData?.data.total_results / 28)
+                : Math.round(observationData?.data.total_results / 16)
             }
             color="primary"
             onChange={handlePageNumberChange}
@@ -312,21 +270,4 @@ function RecentObservations(props) {
   );
 }
 
-const mapStateToProps = (state) => {
-  return {
-    locationSelected: state.locationSelected,
-    speciesSelected: state.speciesSelected,
-    userCoordinates: state.userCoordinates,
-    pageNumber: state.pageNumber,
-  };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    onUpdateError: (error) => dispatch(actions.updateError(error)),
-    onUpdatePageNumber: (pageNumber) =>
-      dispatch(actions.updatePageNumber(pageNumber)),
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(RecentObservations);
+export default RecentObservations;

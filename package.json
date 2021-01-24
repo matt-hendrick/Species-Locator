@@ -2,7 +2,7 @@
   "name": "speciesnearme",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://localhost:5001/specieslocator/us-central1/app",
+  "proxy": "https://us-central1-specieslocator.cloudfunctions.net/app",
   "dependencies": {
     "@material-ui/core": "^4.11.0",
     "@material-ui/icons": "^4.9.1",

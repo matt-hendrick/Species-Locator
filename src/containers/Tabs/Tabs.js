@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
-import { connect } from 'react-redux';
 
+// Redux
+import { useSelector } from 'react-redux';
+
+// MUI
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
@@ -40,7 +43,7 @@ function a11yProps(index) {
 function SimpleTabs(props) {
   const [value, setValue] = useState(0);
 
-  const { error } = props;
+  const error = useSelector((state) => state.error);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -68,10 +71,4 @@ function SimpleTabs(props) {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    error: state.error,
-  };
-};
-
-export default connect(mapStateToProps)(SimpleTabs);
+export default SimpleTabs;
