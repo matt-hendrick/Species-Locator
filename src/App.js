@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import axios from 'axios';
 import * as classes from './App.module.css';
 
@@ -17,8 +17,14 @@ axios.defaults.baseURL =
   'https://us-central1-specieslocator.cloudfunctions.net/app';
 
 function App() {
+  if (window.gtag) {
+    window.gtag('config', process.env.REACT_APP_FIREBASE_MEASUREMENT_ID, {
+      page_title: document.title,
+      page_path: window.location.pathname + window.location.search,
+    });
+  }
   return (
-    <React.Fragment>
+    <Fragment>
       <ThemeProvider>
         <Navbar />
         <Container className={classes.App}>
@@ -41,7 +47,7 @@ function App() {
           <Footer />
         </Container>
       </ThemeProvider>
-    </React.Fragment>
+    </Fragment>
   );
 }
 

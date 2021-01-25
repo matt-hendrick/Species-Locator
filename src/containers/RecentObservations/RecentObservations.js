@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import axios from 'axios';
 
 // Redux
@@ -15,6 +15,13 @@ import Pagination from '@material-ui/lab/Pagination';
 import Card from '../../components/Card/Card';
 
 function RecentObservations() {
+  if (window.gtag) {
+    window.gtag('config', process.env.REACT_APP_FIREBASE_MEASUREMENT_ID, {
+      page_title: document.title,
+      page_path: window.location.pathname + window.location.search,
+    });
+  }
+
   const [observationData, setObservationData] = useState(null);
   const [isLoading, setIsLoading] = useState(null);
 
@@ -136,7 +143,7 @@ function RecentObservations() {
   };
 
   let display = (
-    <React.Fragment>
+    <Fragment>
       <Container style={{ display: 'flex', justifyContent: 'center' }}>
         <CircularProgress size={100} />
       </Container>
@@ -151,7 +158,7 @@ function RecentObservations() {
           Loading recent observations from iNaturalist...
         </Typography>
       </Container>
-    </React.Fragment>
+    </Fragment>
   );
 
   if (observationData && !isLoading) {
@@ -241,7 +248,7 @@ function RecentObservations() {
   }
 
   return (
-    <React.Fragment>
+    <Fragment>
       <Container>
         {display}
         {observationData?.data.results[0] &&
@@ -266,7 +273,7 @@ function RecentObservations() {
           />
         ) : null}
       </Container>
-    </React.Fragment>
+    </Fragment>
   );
 }
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import axios from 'axios';
 
 // Redux
@@ -14,6 +14,13 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 function SpeciesForm(props) {
+  if (window.gtag) {
+    window.gtag('config', process.env.REACT_APP_FIREBASE_MEASUREMENT_ID, {
+      page_title: document.title,
+      page_path: window.location.pathname + window.location.search,
+    });
+  }
+
   const [userSpeciesQuery, setUserSpeciesQuery] = useState(null);
   const [open, setOpen] = useState(false);
   const [options, setOptions] = useState([]);
@@ -100,12 +107,12 @@ function SpeciesForm(props) {
           InputProps={{
             ...params.InputProps,
             endAdornment: (
-              <React.Fragment>
+              <Fragment>
                 {loading && userSpeciesQuery ? (
                   <CircularProgress color="inherit" size={20} />
                 ) : null}
                 {params.InputProps.endAdornment}
-              </React.Fragment>
+              </Fragment>
             ),
           }}
         />

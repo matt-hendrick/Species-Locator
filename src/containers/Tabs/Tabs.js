@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, Fragment } from 'react';
 
 // Redux
 import { useSelector } from 'react-redux';
@@ -41,6 +41,13 @@ function a11yProps(index) {
 }
 
 function SimpleTabs(props) {
+  if (window.gtag) {
+    window.gtag('config', process.env.REACT_APP_FIREBASE_MEASUREMENT_ID, {
+      page_title: document.title,
+      page_path: window.location.pathname + window.location.search,
+    });
+  }
+
   const [value, setValue] = useState(0);
 
   const error = useSelector((state) => state.error);
@@ -53,7 +60,7 @@ function SimpleTabs(props) {
     return <ErrorMessage>{error}</ErrorMessage>;
   } else {
     return (
-      <React.Fragment>
+      <Fragment>
         <AppBar position="static">
           <Tabs value={value} onChange={handleChange} centered>
             <Tab label="Recent Observations" {...a11yProps(0)} />
@@ -66,7 +73,7 @@ function SimpleTabs(props) {
         <TabPanel value={value} index={1}>
           <MapDisplay />
         </TabPanel>
-      </React.Fragment>
+      </Fragment>
     );
   }
 }

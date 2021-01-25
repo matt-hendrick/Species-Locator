@@ -1,15 +1,15 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 
 // MUI
 import Typography from '@material-ui/core/Typography';
 
 function ErrorMessage(props) {
   return (
-    <React.Fragment>
+    <Fragment>
       <Typography gutterBottom variant="h4" component="h4">
         Something went wrong. {props.children}.
       </Typography>
-    </React.Fragment>
+    </Fragment>
   );
 }
 

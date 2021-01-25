@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 
 // Redux
 import { useDispatch } from 'react-redux';
@@ -8,6 +8,13 @@ import { updateUserCoordinates } from '../../store/actions/actions';
 import Button from '@material-ui/core/Button';
 
 function GeoLocationButton() {
+  if (window.gtag) {
+    window.gtag('config', process.env.REACT_APP_FIREBASE_MEASUREMENT_ID, {
+      page_title: document.title,
+      page_path: window.location.pathname + window.location.search,
+    });
+  }
+
   const dispatch = useDispatch();
 
   const getUserGeolocation = () => {
@@ -22,7 +29,7 @@ function GeoLocationButton() {
   };
 
   return (
-    <React.Fragment>
+    <Fragment>
       {navigator.geolocation ? (
         <Button
           onClick={getUserGeolocation}
@@ -33,7 +40,7 @@ function GeoLocationButton() {
           Use My Location
         </Button>
       ) : null}
-    </React.Fragment>
+    </Fragment>
   );
 }
 

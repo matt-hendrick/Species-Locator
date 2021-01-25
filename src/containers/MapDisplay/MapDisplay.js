@@ -1,11 +1,21 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { MapContainer, TileLayer } from 'react-leaflet';
 import * as classes from './MapDisplay.module.css';
 
 // Redux
 import { useSelector } from 'react-redux';
 
+// MUI
+import Typography from '@material-ui/core/Typography';
+
 function MapDisplay() {
+  if (window.gtag) {
+    window.gtag('config', process.env.REACT_APP_FIREBASE_MEASUREMENT_ID, {
+      page_title: document.title,
+      page_path: window.location.pathname + window.location.search,
+    });
+  }
+
   const locationSelected = useSelector((state) => state.locationSelected);
   const speciesSelected = useSelector((state) => state.speciesSelected);
   const userCoordinates = useSelector((state) => state.userCoordinates);
@@ -16,18 +26,24 @@ function MapDisplay() {
 
   if (!locationSelected && !speciesSelected && !userCoordinates) {
     leafletDisplay = (
-      <MapContainer
-        key={coordinates}
-        className={classes.MapID}
-        center={coordinates}
-        zoom={14}
-        scrollWheelZoom={false}
-      >
-        <TileLayer
-          attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        />
-      </MapContainer>
+      <div style={{ textAlign: 'center' }}>
+        <Typography variant="h6" component="h6">
+          Select a location and a species to view a heatmap of recent
+          observations
+        </Typography>
+        <MapContainer
+          key={coordinates}
+          className={classes.MapNoInfo}
+          center={coordinates}
+          zoom={14}
+          scrollWheelZoom={false}
+        >
+          <TileLayer
+            attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          />
+        </MapContainer>
+      </div>
     );
   } else if (speciesSelected && !locationSelected && !userCoordinates) {
     mapKey = coordinates + speciesSelected.id;
@@ -79,18 +95,24 @@ function MapDisplay() {
       locationSelected[0]?.geometry.location.lng,
     ];
     leafletDisplay = (
-      <MapContainer
-        key={mapKey}
-        className={classes.MapID}
-        center={mapKey}
-        zoom={14}
-        scrollWheelZoom={false}
-      >
-        <TileLayer
-          attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        />
-      </MapContainer>
+      <div style={{ textAlign: 'center' }}>
+        <Typography variant="h6" component="h6">
+          Select a location and a species to view a heatmap of recent
+          observations
+        </Typography>
+        <MapContainer
+          key={mapKey}
+          className={classes.MapID}
+          center={mapKey}
+          zoom={14}
+          scrollWheelZoom={false}
+        >
+          <TileLayer
+            attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          />
+        </MapContainer>
+      </div>
     );
   } else if (speciesSelected && userCoordinates) {
     coordinates = [userCoordinates[0], userCoordinates[1]];
@@ -116,22 +138,28 @@ function MapDisplay() {
   } else if (!speciesSelected && userCoordinates) {
     mapKey = [userCoordinates[0], userCoordinates[1]];
     leafletDisplay = (
-      <MapContainer
-        key={mapKey}
-        className={classes.MapID}
-        center={mapKey}
-        zoom={14}
-        scrollWheelZoom={false}
-      >
-        <TileLayer
-          attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        />
-      </MapContainer>
+      <div style={{ textAlign: 'center' }}>
+        <Typography variant="h6" component="h6">
+          Select a location and a species to view a heatmap of recent
+          observations
+        </Typography>
+        <MapContainer
+          key={mapKey}
+          className={classes.MapID}
+          center={mapKey}
+          zoom={14}
+          scrollWheelZoom={false}
+        >
+          <TileLayer
+            attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          />
+        </MapContainer>
+      </div>
     );
   }
 
-  return <React.Fragment>{leafletDisplay}</React.Fragment>;
+  return <Fragment>{leafletDisplay}</Fragment>;
 }
 
 export default MapDisplay;
