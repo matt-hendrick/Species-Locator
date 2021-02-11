@@ -64,7 +64,7 @@ function GoogleMapsLocationForm() {
     // debouncing so API called only if user has stopped typing for one second
     const timeoutId = setTimeout(() => requestDataFromAPI(), 1000);
     return () => clearTimeout(timeoutId);
-  }, [loading, userLocationQuery]);
+  }, [loading, userLocationQuery, dispatch]);
 
   useEffect(() => {
     if (!open) {
