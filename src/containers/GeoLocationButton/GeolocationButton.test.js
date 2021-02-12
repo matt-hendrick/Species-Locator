@@ -14,18 +14,3 @@ describe('Recent Observations tests', () => {
     expect(screen.getByText(/Use My Location/i)).toBeInTheDocument();
   });
 });
-// test('props.onClick is called when button is clicked', () => {
-//   navigator.geolocation = {
-//     getCurrentPosition: jest.fn(),
-//     watchPosition: jest.fn(),
-//   };
-//   const mockOnClick = jest.fn();
-//   const { getByText } = render(<GeoLocationButton onClick={mockOnClick} />);
-//   // Simulate button click
-//   const button = getByText('Use My Location');
-//   fireEvent.click(button);
-
-//   // Verify callback is invoked
-
-//   expect(mockOnClick).toHaveBeenCalled();
-// });
