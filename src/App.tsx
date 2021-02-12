@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import axios from 'axios';
-import * as classes from './App.module.css';
+import './App.css';
 
 // MUI
 import Container from '@material-ui/core/Container';
@@ -16,8 +16,18 @@ import GeoLocationButton from './containers/GeoLocationButton/GeoLocationButton'
 axios.defaults.baseURL =
   'https://us-central1-specieslocator.cloudfunctions.net/app';
 
+  declare global {
+    interface Window {
+      gtag?: (
+        key: string,
+        trackingId: string,
+        config: { page_path: string }
+      ) => void
+    }
+  }
+
 function App() {
-  if (window.gtag) {
+  if (window.gtag && process.env.REACT_APP_FIREBASE_MEASUREMENT_ID) {
     window.gtag('config', process.env.REACT_APP_FIREBASE_MEASUREMENT_ID, {
       page_title: document.title,
       page_path: window.location.pathname + window.location.search,
@@ -27,7 +37,7 @@ function App() {
     <Fragment>
       <ThemeProvider>
         <Navbar />
-        <Container className={classes.App}>
+        <Container className="App">
           <Container>
             <SpeciesForm />
             <GoogleMapsLocationForm />
