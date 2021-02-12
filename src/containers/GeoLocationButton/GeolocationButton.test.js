@@ -1,18 +1,19 @@
 import React from 'react';
-import { render, screen, create } from '../../redux_test-utils';
+import { render, screen, create } from '../../utility/testing/reduxTestUtils';
 import GeoLocationButton from './GeoLocationButton';
 
-test('Renders GeoLocationButton with the text "Use My Location"', () => {
-  navigator.geolocation = {
-    getCurrentPosition: jest.fn(),
-    watchPosition: jest.fn(),
-  };
+describe('Recent Observations tests', () => {
+  it('Renders GeoLocationButton with the text "Use My Location"', () => {
+    navigator.geolocation = {
+      getCurrentPosition: jest.fn(),
+      watchPosition: jest.fn(),
+    };
 
-  render(<GeoLocationButton />);
+    render(<GeoLocationButton />);
 
-  expect(screen.getByText(/Use My Location/i)).toBeInTheDocument();
+    expect(screen.getByText(/Use My Location/i)).toBeInTheDocument();
+  });
 });
-
 // test('props.onClick is called when button is clicked', () => {
 //   navigator.geolocation = {
 //     getCurrentPosition: jest.fn(),
