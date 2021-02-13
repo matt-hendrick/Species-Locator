@@ -2,6 +2,9 @@ import React, { Fragment } from 'react';
 import axios from 'axios';
 import './App.css';
 
+// Utility Functions
+import { googleAnalytics } from './utility/utilityFunctions';
+
 // MUI
 import Container from '@material-ui/core/Container';
 
@@ -27,13 +30,7 @@ declare global {
 }
 
 function App() {
-  // Google Analytics
-  if (window.gtag && process.env.REACT_APP_FIREBASE_MEASUREMENT_ID) {
-    window.gtag('config', process.env.REACT_APP_FIREBASE_MEASUREMENT_ID, {
-      page_title: document.title,
-      page_path: window.location.pathname + window.location.search,
-    });
-  }
+  googleAnalytics();
   return (
     <Fragment>
       <ThemeProvider>

@@ -1,6 +1,9 @@
 import React, { useState, useEffect, ChangeEvent } from 'react';
 import axios from 'axios';
 
+// Utility Functions
+import { googleAnalytics } from '../../utility/utilityFunctions';
+
 // Redux
 import { useDispatch } from 'react-redux';
 import {
@@ -14,13 +17,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import AutocompleteForm from '../../components/AutocompleteForm/AutocompleteForm';
 
 function SpeciesForm() {
-  // Google Analytics
-  if (window.gtag && process.env.REACT_APP_FIREBASE_MEASUREMENT_ID) {
-    window.gtag('config', process.env.REACT_APP_FIREBASE_MEASUREMENT_ID, {
-      page_title: document.title,
-      page_path: window.location.pathname + window.location.search,
-    });
-  }
+  googleAnalytics();
 
   const [userSpeciesQuery, setUserSpeciesQuery] = useState<string | null>(null);
   const [open, setOpen] = useState(false);

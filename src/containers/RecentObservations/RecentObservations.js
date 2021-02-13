@@ -2,7 +2,7 @@ import React, { useState, useEffect, Fragment } from 'react';
 import axios from 'axios';
 
 // Utility Functions
-import { toTitleCase } from '../../utility/utilityFunctions';
+import { toTitleCase, googleAnalytics } from '../../utility/utilityFunctions';
 
 // Redux
 import { useSelector, useDispatch } from 'react-redux';
@@ -18,13 +18,7 @@ import Pagination from '@material-ui/lab/Pagination';
 import Card from '../../components/Card/Card';
 
 function RecentObservations() {
-  // Google Analytics
-  if (window.gtag) {
-    window.gtag('config', process.env.REACT_APP_FIREBASE_MEASUREMENT_ID, {
-      page_title: document.title,
-      page_path: window.location.pathname + window.location.search,
-    });
-  }
+  googleAnalytics();
 
   const [observationData, setObservationData] = useState(null);
   const [isLoading, setIsLoading] = useState(null);

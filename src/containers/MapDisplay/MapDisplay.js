@@ -2,6 +2,9 @@ import React, { Fragment } from 'react';
 import { MapContainer, TileLayer } from 'react-leaflet';
 import * as classes from './MapDisplay.module.css';
 
+// Utility Functions
+import { googleAnalytics } from '../../utility/utilityFunctions';
+
 // Redux
 import { useSelector } from 'react-redux';
 
@@ -9,13 +12,7 @@ import { useSelector } from 'react-redux';
 import Typography from '@material-ui/core/Typography';
 
 function MapDisplay() {
-  // Google Analytics
-  if (window.gtag) {
-    window.gtag('config', process.env.REACT_APP_FIREBASE_MEASUREMENT_ID, {
-      page_title: document.title,
-      page_path: window.location.pathname + window.location.search,
-    });
-  }
+  googleAnalytics();
 
   const locationSelected = useSelector((state) => state.locationSelected);
   const speciesSelected = useSelector((state) => state.speciesSelected);

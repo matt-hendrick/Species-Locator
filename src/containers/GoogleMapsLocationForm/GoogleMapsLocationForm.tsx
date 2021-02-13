@@ -1,6 +1,9 @@
 import React, { useState, useEffect, ChangeEvent } from 'react';
 import axios from 'axios';
 
+// Utility Functions
+import { googleAnalytics } from '../../utility/utilityFunctions';
+
 // Redux
 import { useDispatch } from 'react-redux';
 import {
@@ -11,6 +14,7 @@ import {
 // MUI
 import CircularProgress from '@material-ui/core/CircularProgress';
 
+// Components
 import AutocompleteForm from '../../components/AutocompleteForm/AutocompleteForm';
 
 interface Option {
@@ -18,13 +22,7 @@ interface Option {
 }
 
 function GoogleMapsLocationForm() {
-  // Google Analytics
-  if (window.gtag && process.env.REACT_APP_FIREBASE_MEASUREMENT_ID) {
-    window.gtag('config', process.env.REACT_APP_FIREBASE_MEASUREMENT_ID, {
-      page_title: document.title,
-      page_path: window.location.pathname + window.location.search,
-    });
-  }
+  googleAnalytics();
 
   const [userLocationQuery, setUserLocationQuery] = useState<string | null>(
     null
