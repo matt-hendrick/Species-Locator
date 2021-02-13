@@ -8,7 +8,7 @@ import { updateUserCoordinates } from '../../store/actions/actions';
 import Button from '@material-ui/core/Button';
 
 function GeoLocationButton() {
-  if (window.gtag) {
+  if (window.gtag && process.env.REACT_APP_FIREBASE_MEASUREMENT_ID) {
     window.gtag('config', process.env.REACT_APP_FIREBASE_MEASUREMENT_ID, {
       page_title: document.title,
       page_path: window.location.pathname + window.location.search,

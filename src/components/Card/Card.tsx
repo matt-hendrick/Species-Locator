@@ -9,6 +9,21 @@ import Typography from '@material-ui/core/Typography';
 import Link from '@material-ui/core/Link';
 import Carousel from 'react-material-ui-carousel';
 
+interface Props {speciesName: string,
+wikipediaURL: string | undefined,
+photos: {
+  id: number;
+  url: string
+}[],
+observedDateTime: string,
+observationURL: string,
+observedLocation: string,
+locationIsObscured: boolean,
+coordinates: string,
+title: string,
+spottedBy: string,
+spottedByURL: string}
+
 const useStyles = makeStyles({
   root: {
     maxWidth: 345,
@@ -18,7 +33,7 @@ const useStyles = makeStyles({
   },
 });
 
-function MaterialUICard(props) {
+function MaterialUICard(props : Props) {
   const classes = useStyles();
 
   return (
@@ -53,9 +68,6 @@ function MaterialUICard(props) {
         </Typography>
         <Typography variant="body1" color="textSecondary" component="p">
           {props.observedLocation}{' '}
-          {/* <Typography variant="caption" color="textSecondary" component="p">
-            {props.locationIsObscured ? props.coordinates : null}
-          </Typography> */}
         </Typography>
         <Typography variant="caption" color="textSecondary" component="p">
           Spotted by <Link href={props.spottedByURL}>{props.spottedBy}</Link> at{' '}
