@@ -8,15 +8,13 @@ import {
   updateError,
 } from '../../store/actions/actions';
 
+// Types
+import { SpeciesSelected } from '../../store/reduxTypes';
+
 // MUI
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import CircularProgress from '@material-ui/core/CircularProgress';
-
-interface Option {
-  preferred_common_name: string;
-  name: string;
-}
 
 function SpeciesForm() {
   if (window.gtag && process.env.REACT_APP_FIREBASE_MEASUREMENT_ID) {
@@ -96,7 +94,7 @@ function SpeciesForm() {
       }}
       onChange={(option, value) => dispatch(updateSpeciesSelected(value))}
       // added ternary expression below as some species do not have a "preferred common name"
-      getOptionLabel={(option: Option) =>
+      getOptionLabel={(option: SpeciesSelected) =>
         option.preferred_common_name
           ? option.preferred_common_name
           : option.name

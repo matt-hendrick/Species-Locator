@@ -1,6 +1,15 @@
 import * as actionTypes from './actions/actionTypes';
+import {
+  ReducerState,
+  UpdateErrorAction,
+  UpdateLocationSelectedAction,
+  UpdatePageNumberAction,
+  UpdateSpeciesSelectedAction,
+  UpdateUserCoordinatesAction,
+  Actions,
+} from './reduxTypes';
 
-const initialState = {
+const initialState: ReducerState = {
   locationSelected: null,
   speciesSelected: null,
   userCoordinates: null,
@@ -8,14 +17,17 @@ const initialState = {
   pageNumber: null,
 };
 
-const updateObject = (oldObject, updatedProperties) => {
+const updateObject = (oldObject: ReducerState, updatedProperties: any) => {
   return {
     ...oldObject,
     ...updatedProperties,
   };
 };
 
-const updateSpeciesSelected = (state, action) => {
+const updateSpeciesSelected = (
+  state: ReducerState,
+  action: UpdateSpeciesSelectedAction
+) => {
   const newSpeciesSelected = action.speciesSelected;
   return updateObject(state, {
     speciesSelected: newSpeciesSelected,
@@ -23,7 +35,10 @@ const updateSpeciesSelected = (state, action) => {
   });
 };
 
-const updateLocationSelected = (state, action) => {
+const updateLocationSelected = (
+  state: ReducerState,
+  action: UpdateLocationSelectedAction
+) => {
   const newLocationSelected = action.locationSelected;
   return updateObject(state, {
     locationSelected: newLocationSelected,
@@ -32,7 +47,10 @@ const updateLocationSelected = (state, action) => {
   });
 };
 
-const updateUserCoordinates = (state, action) => {
+const updateUserCoordinates = (
+  state: ReducerState,
+  action: UpdateUserCoordinatesAction
+) => {
   const newUserCoordinates = action.userCoordinates;
   return updateObject(state, {
     userCoordinates: newUserCoordinates,
@@ -41,7 +59,7 @@ const updateUserCoordinates = (state, action) => {
   });
 };
 
-const updateError = (state, action) => {
+const updateError = (state: ReducerState, action: UpdateErrorAction) => {
   const newError = action.error;
   return updateObject(state, {
     error: newError,
@@ -49,14 +67,17 @@ const updateError = (state, action) => {
   });
 };
 
-const updatePageNumber = (state, action) => {
+const updatePageNumber = (
+  state: ReducerState,
+  action: UpdatePageNumberAction
+) => {
   const newPageNumber = action.pageNumber;
   return updateObject(state, {
     pageNumber: newPageNumber,
   });
 };
 
-const reducer = (state = initialState, action) => {
+const reducer = (state = initialState, action: Actions) => {
   switch (action.type) {
     case actionTypes.UPDATE_SPECIES_SELECTED:
       return updateSpeciesSelected(state, action);
