@@ -14,8 +14,8 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 interface Option {
-  preferred_common_name: string,
-  name: string
+  preferred_common_name: string;
+  name: string;
 }
 
 function SpeciesForm() {
@@ -69,14 +69,15 @@ function SpeciesForm() {
     }
   }, [open]);
 
-  const userSpeciesQueryChangedHandler = (event : ChangeEvent) => {
-    const target = event.target as HTMLInputElement
+  const userSpeciesQueryChangedHandler = (event: ChangeEvent) => {
+    const target = event.target as HTMLInputElement;
     if (target) {
-    const updatedSpecies = target.value;
-    setUserSpeciesQuery(updatedSpecies);
-    // clears out options if userSpeciesQuery has been changed to an empty string
-    if (options !== [] && updatedSpecies === '') {
-      setOptions([]);}
+      const updatedSpecies = target.value;
+      setUserSpeciesQuery(updatedSpecies);
+      // clears out options if userSpeciesQuery has been changed to an empty string
+      if (options !== [] && updatedSpecies === '') {
+        setOptions([]);
+      }
     }
   };
 
@@ -95,7 +96,7 @@ function SpeciesForm() {
       }}
       onChange={(option, value) => dispatch(updateSpeciesSelected(value))}
       // added ternary expression below as some species do not have a "preferred common name"
-      getOptionLabel={(option : Option) =>
+      getOptionLabel={(option: Option) =>
         option.preferred_common_name
           ? option.preferred_common_name
           : option.name

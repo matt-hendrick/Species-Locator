@@ -16,15 +16,15 @@ import GeoLocationButton from './containers/GeoLocationButton/GeoLocationButton'
 axios.defaults.baseURL =
   'https://us-central1-specieslocator.cloudfunctions.net/app';
 
-  declare global {
-    interface Window {
-      gtag?: (
-        key: string,
-        trackingId: string,
-        config: { page_path: string }
-      ) => void
-    }
+declare global {
+  interface Window {
+    gtag?: (
+      key: string,
+      trackingId: string,
+      config: { page_path: string }
+    ) => void;
   }
+}
 
 function App() {
   if (window.gtag && process.env.REACT_APP_FIREBASE_MEASUREMENT_ID) {

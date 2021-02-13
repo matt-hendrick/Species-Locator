@@ -14,7 +14,7 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 interface Option {
-  description: string
+  description: string;
 }
 
 function GoogleMapsLocationForm() {
@@ -25,7 +25,9 @@ function GoogleMapsLocationForm() {
     });
   }
 
-  const [userLocationQuery, setUserLocationQuery] = useState<string | null>(null);
+  const [userLocationQuery, setUserLocationQuery] = useState<string | null>(
+    null
+  );
   const [open, setOpen] = useState(false);
   const [options, setOptions] = useState([]);
   const loading = open && options.length === 0;
@@ -51,7 +53,7 @@ function GoogleMapsLocationForm() {
               response = data.data.predictions;
 
               if (active && response) {
-                setOptions(response.map((data : object) => data));
+                setOptions(response.map((data: object) => data));
               }
             })
             .catch((error) => {
@@ -76,15 +78,16 @@ function GoogleMapsLocationForm() {
     }
   }, [open]);
 
-  const userLocationQueryChangedHandler = (event : ChangeEvent) => {
-    const target = event.target as HTMLInputElement
+  const userLocationQueryChangedHandler = (event: ChangeEvent) => {
+    const target = event.target as HTMLInputElement;
     if (target) {
-      const updatedLocation = target.value
-      setUserLocationQuery(updatedLocation)
+      const updatedLocation = target.value;
+      setUserLocationQuery(updatedLocation);
       // clears out options if userLocationQuery has been changed to an empty string
       if (options !== [] && updatedLocation === '') {
         setOptions([]);
-    }}
+      }
+    }
   };
 
   return (
@@ -104,7 +107,7 @@ function GoogleMapsLocationForm() {
         dispatch(getCoordinatesFromGeocodeAPI(value));
         setOptions([]);
       }}
-      getOptionLabel={(option : Option) => option.description}
+      getOptionLabel={(option: Option) => option.description}
       options={options}
       loading={loading}
       loadingText="Search a location"

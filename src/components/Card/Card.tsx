@@ -9,20 +9,22 @@ import Typography from '@material-ui/core/Typography';
 import Link from '@material-ui/core/Link';
 import Carousel from 'react-material-ui-carousel';
 
-interface Props {speciesName: string,
-wikipediaURL: string | undefined,
-photos: {
-  id: number;
-  url: string
-}[],
-observedDateTime: string,
-observationURL: string,
-observedLocation: string,
-locationIsObscured: boolean,
-coordinates: string,
-title: string,
-spottedBy: string,
-spottedByURL: string}
+interface Props {
+  speciesName: string;
+  wikipediaURL: string | undefined;
+  photos: {
+    id: number;
+    url: string;
+  }[];
+  observedDateTime: string;
+  observationURL: string;
+  observedLocation: string;
+  locationIsObscured: boolean;
+  coordinates: string;
+  title: string;
+  spottedBy: string;
+  spottedByURL: string;
+}
 
 const useStyles = makeStyles({
   root: {
@@ -33,7 +35,7 @@ const useStyles = makeStyles({
   },
 });
 
-function MaterialUICard(props : Props) {
+function MaterialUICard(props: Props) {
   const classes = useStyles();
 
   return (

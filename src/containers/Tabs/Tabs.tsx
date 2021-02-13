@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from 'react';
+import React, { useState, Fragment, ReactNode, ChangeEvent } from 'react';
 
 // Redux
 import { useSelector } from 'react-redux';
@@ -13,7 +13,17 @@ import MapDisplay from '../MapDisplay/MapDisplay';
 import RecentObservations from '../RecentObservations/RecentObservations';
 import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
 
-function TabPanel(props) {
+interface Props {
+  children: ReactNode;
+  value: number;
+  index: number;
+}
+
+interface StateProps {
+  error: string;
+}
+
+function TabPanel(props: Props) {
   const { children, value, index, ...other } = props;
 
   return (
@@ -33,15 +43,15 @@ function TabPanel(props) {
   );
 }
 
-function a11yProps(index) {
+function a11yProps(index: number) {
   return {
     id: `simple-tab-${index}`,
     'aria-controls': `simple-tabpanel-${index}`,
   };
 }
 
-function SimpleTabs(props) {
-  if (window.gtag) {
+function SimpleTabs() {
+  if (window.gtag && process.env.REACT_APP_FIREBASE_MEASUREMENT_ID) {
     window.gtag('config', process.env.REACT_APP_FIREBASE_MEASUREMENT_ID, {
       page_title: document.title,
       page_path: window.location.pathname + window.location.search,
@@ -50,9 +60,9 @@ function SimpleTabs(props) {
 
   const [value, setValue] = useState(0);
 
-  const error = useSelector((state) => state.error);
+  const error = useSelector((state: StateProps) => state.error);
 
-  const handleChange = (event, newValue) => {
+  const handleChange = (event: ChangeEvent<{}>, newValue: number) => {
     setValue(newValue);
   };
 

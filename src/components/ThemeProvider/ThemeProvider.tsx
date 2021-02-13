@@ -1,11 +1,11 @@
-import React, {ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 
 // MUI
 import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
 
 interface ThemeProps {
-children: ReactNode ,
+  children: ReactNode;
 }
 
 const theme = createMuiTheme({
@@ -32,7 +32,7 @@ const theme = createMuiTheme({
   },
 });
 
-function MaterialUITheme(props : ThemeProps) {
+function MaterialUITheme(props: ThemeProps) {
   return <ThemeProvider theme={theme}>{props.children}</ThemeProvider>;
 }
 

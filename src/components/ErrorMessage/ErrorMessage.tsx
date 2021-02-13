@@ -4,10 +4,10 @@ import React, { Fragment } from 'react';
 import Typography from '@material-ui/core/Typography';
 
 interface Props {
-  children: string
+  children: string;
 }
 
-function ErrorMessage(props : Props) {
+function ErrorMessage(props: Props) {
   return (
     <Fragment>
       <Typography gutterBottom variant="h4" component="h4">
