@@ -1,10 +1,10 @@
-import React, { useState, useEffect, Fragment } from 'react';
+import React, { useState, useEffect, Fragment, ChangeEvent } from 'react';
 import axios from 'axios';
 
 // Redux
 import { useDispatch } from 'react-redux';
 import {
-  updateSpeciesSelected,
+  getCoordinatesFromGeocodeAPI,
   updateError,
 } from '../../store/actions/actions';
 
@@ -13,15 +13,19 @@ import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
-function SpeciesForm(props) {
-  if (window.gtag) {
+interface Option {
+  description: string
+}
+
+function GoogleMapsLocationForm() {
+  if (window.gtag && process.env.REACT_APP_FIREBASE_MEASUREMENT_ID) {
     window.gtag('config', process.env.REACT_APP_FIREBASE_MEASUREMENT_ID, {
       page_title: document.title,
       page_path: window.location.pathname + window.location.search,
     });
   }
 
-  const [userSpeciesQuery, setUserSpeciesQuery] = useState(null);
+  const [userLocationQuery, setUserLocationQuery] = useState<string | null>(null);
   const [open, setOpen] = useState(false);
   const [options, setOptions] = useState([]);
   const loading = open && options.length === 0;
@@ -29,34 +33,42 @@ function SpeciesForm(props) {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    let active = true;
     let response = null;
+
     if (!loading) {
       return undefined;
     }
 
     const requestDataFromAPI = () => {
-      if (userSpeciesQuery?.length > 2) {
-        axios
-          .get(
-            'https://api.inaturalist.org/v1/taxa/autocomplete?q=' +
-              userSpeciesQuery
-          )
-          .then((data) => {
-            response = data;
-            if (response?.data.results) {
-              setOptions(response.data.results.map((data) => data));
-            }
-          })
-          .catch((error) => {
-            dispatch(updateError(error.message));
-          });
+      if (userLocationQuery && userLocationQuery.length > 2) {
+        (async () => {
+          axios
+            .get('/Maps', {
+              params: { address: userLocationQuery },
+            })
+            .then((data) => {
+              response = data.data.predictions;
+
+              if (active && response) {
+                setOptions(response.map((data : object) => data));
+              }
+            })
+            .catch((error) => {
+              dispatch(updateError(error.message));
+            });
+        })();
+
+        return () => {
+          active = false;
+        };
       }
     };
 
     // debouncing so API called only if user has stopped typing for one second
     const timeoutId = setTimeout(() => requestDataFromAPI(), 1000);
     return () => clearTimeout(timeoutId);
-  }, [loading, userSpeciesQuery, dispatch]);
+  }, [loading, userLocationQuery, dispatch]);
 
   useEffect(() => {
     if (!open) {
@@ -64,18 +76,20 @@ function SpeciesForm(props) {
     }
   }, [open]);
 
-  const userSpeciesQueryChangedHandler = (event) => {
-    const updatedSpecies = event.target.value;
-    setUserSpeciesQuery(updatedSpecies);
-    // clears out options if userSpeciesQuery has been changed to an empty string
-    if (options !== [] && updatedSpecies === '') {
-      setOptions([]);
-    }
+  const userLocationQueryChangedHandler = (event : ChangeEvent) => {
+    const target = event.target as HTMLInputElement
+    if (target) {
+      const updatedLocation = target.value
+      setUserLocationQuery(updatedLocation)
+      // clears out options if userLocationQuery has been changed to an empty string
+      if (options !== [] && updatedLocation === '') {
+        setOptions([]);
+    }}
   };
 
   return (
     <Autocomplete
-      id="SpeciesForm"
+      id="GoogleMapsLocationForm"
       style={{ textAlign: 'center' }}
       clearOnEscape={true}
       filterOptions={(options, state) => options}
@@ -86,29 +100,27 @@ function SpeciesForm(props) {
       onClose={() => {
         setOpen(false);
       }}
-      onChange={(option, value) => dispatch(updateSpeciesSelected(value))}
-      // added ternary expression below as some species do not have a "preferred common name"
-      getOptionLabel={(option) =>
-        option.preferred_common_name
-          ? option.preferred_common_name
-          : option.name
-      }
+      onChange={(option, value) => {
+        dispatch(getCoordinatesFromGeocodeAPI(value));
+        setOptions([]);
+      }}
+      getOptionLabel={(option : Option) => option.description}
       options={options}
       loading={loading}
-      loadingText="Search a species"
+      loadingText="Search a location"
       noOptionsText="No results found. Try clearing the text and re-searching."
       renderInput={(params) => (
         <TextField
           {...params}
-          label="Species Selector"
+          label="Location Selector"
           variant="outlined"
           margin="normal"
-          onChange={(event) => userSpeciesQueryChangedHandler(event)}
+          onChange={(event) => userLocationQueryChangedHandler(event)}
           InputProps={{
             ...params.InputProps,
             endAdornment: (
               <Fragment>
-                {loading && userSpeciesQuery ? (
+                {loading && userLocationQuery ? (
                   <CircularProgress color="inherit" size={20} />
                 ) : null}
                 {params.InputProps.endAdornment}
@@ -121,4 +133,4 @@ function SpeciesForm(props) {
   );
 }
 
-export default SpeciesForm;
+export default GoogleMapsLocationForm;
