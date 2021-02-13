@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Fragment, ChangeEvent } from 'react';
+import React, { useState, useEffect, ChangeEvent } from 'react';
 import axios from 'axios';
 
 // Redux
@@ -9,15 +9,16 @@ import {
 } from '../../store/actions/actions';
 
 // MUI
-import TextField from '@material-ui/core/TextField';
-import Autocomplete from '@material-ui/lab/Autocomplete';
 import CircularProgress from '@material-ui/core/CircularProgress';
+
+import AutocompleteForm from '../../components/AutocompleteForm/AutocompleteForm';
 
 interface Option {
   description: string;
 }
 
 function GoogleMapsLocationForm() {
+  // Google Analytics
   if (window.gtag && process.env.REACT_APP_FIREBASE_MEASUREMENT_ID) {
     window.gtag('config', process.env.REACT_APP_FIREBASE_MEASUREMENT_ID, {
       page_title: document.title,
@@ -91,11 +92,8 @@ function GoogleMapsLocationForm() {
   };
 
   return (
-    <Autocomplete
+    <AutocompleteForm
       id="GoogleMapsLocationForm"
-      style={{ textAlign: 'center' }}
-      clearOnEscape={true}
-      filterOptions={(options, state) => options}
       open={open}
       onOpen={() => {
         setOpen(true);
@@ -103,7 +101,7 @@ function GoogleMapsLocationForm() {
       onClose={() => {
         setOpen(false);
       }}
-      onChange={(option, value) => {
+      onChange={(option: any, value: any) => {
         dispatch(getCoordinatesFromGeocodeAPI(value));
         setOptions([]);
       }}
@@ -111,27 +109,13 @@ function GoogleMapsLocationForm() {
       options={options}
       loading={loading}
       loadingText="Search a location"
-      noOptionsText="No results found. Try clearing the text and re-searching."
-      renderInput={(params) => (
-        <TextField
-          {...params}
-          label="Location Selector"
-          variant="outlined"
-          margin="normal"
-          onChange={(event) => userLocationQueryChangedHandler(event)}
-          InputProps={{
-            ...params.InputProps,
-            endAdornment: (
-              <Fragment>
-                {loading && userLocationQuery ? (
-                  <CircularProgress color="inherit" size={20} />
-                ) : null}
-                {params.InputProps.endAdornment}
-              </Fragment>
-            ),
-          }}
-        />
-      )}
+      textOnChange={(event: any) => userLocationQueryChangedHandler(event)}
+      label="Location Selector"
+      spinner={
+        loading && userLocationQuery ? (
+          <CircularProgress color="inherit" size={20} />
+        ) : null
+      }
     />
   );
 }

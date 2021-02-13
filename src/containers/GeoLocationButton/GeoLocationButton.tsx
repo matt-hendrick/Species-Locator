@@ -8,6 +8,7 @@ import { updateUserCoordinates } from '../../store/actions/actions';
 import Button from '@material-ui/core/Button';
 
 function GeoLocationButton() {
+  // Google Analytics
   if (window.gtag && process.env.REACT_APP_FIREBASE_MEASUREMENT_ID) {
     window.gtag('config', process.env.REACT_APP_FIREBASE_MEASUREMENT_ID, {
       page_title: document.title,

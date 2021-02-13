@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Fragment, ChangeEvent } from 'react';
+import React, { useState, useEffect, ChangeEvent } from 'react';
 import axios from 'axios';
 
 // Redux
@@ -8,15 +8,13 @@ import {
   updateError,
 } from '../../store/actions/actions';
 
-// Types
-import { SpeciesSelected } from '../../store/reduxTypes';
-
 // MUI
-import TextField from '@material-ui/core/TextField';
-import Autocomplete from '@material-ui/lab/Autocomplete';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
+import AutocompleteForm from '../../components/AutocompleteForm/AutocompleteForm';
+
 function SpeciesForm() {
+  // Google Analytics
   if (window.gtag && process.env.REACT_APP_FIREBASE_MEASUREMENT_ID) {
     window.gtag('config', process.env.REACT_APP_FIREBASE_MEASUREMENT_ID, {
       page_title: document.title,
@@ -80,11 +78,8 @@ function SpeciesForm() {
   };
 
   return (
-    <Autocomplete
-      id="SpeciesForm"
-      style={{ textAlign: 'center' }}
-      clearOnEscape={true}
-      filterOptions={(options, state) => options}
+    <AutocompleteForm
+      id="SpeciesLocatorForm"
       open={open}
       onOpen={() => {
         setOpen(true);
@@ -92,9 +87,10 @@ function SpeciesForm() {
       onClose={() => {
         setOpen(false);
       }}
-      onChange={(option, value) => dispatch(updateSpeciesSelected(value))}
-      // added ternary expression below as some species do not have a "preferred common name"
-      getOptionLabel={(option: SpeciesSelected) =>
+      onChange={(option: any, value: any) =>
+        dispatch(updateSpeciesSelected(value))
+      }
+      getOptionLabel={(option: any) =>
         option.preferred_common_name
           ? option.preferred_common_name
           : option.name
@@ -102,27 +98,13 @@ function SpeciesForm() {
       options={options}
       loading={loading}
       loadingText="Search a species"
-      noOptionsText="No results found. Try clearing the text and re-searching."
-      renderInput={(params) => (
-        <TextField
-          {...params}
-          label="Species Selector"
-          variant="outlined"
-          margin="normal"
-          onChange={(event) => userSpeciesQueryChangedHandler(event)}
-          InputProps={{
-            ...params.InputProps,
-            endAdornment: (
-              <Fragment>
-                {loading && userSpeciesQuery ? (
-                  <CircularProgress color="inherit" size={20} />
-                ) : null}
-                {params.InputProps.endAdornment}
-              </Fragment>
-            ),
-          }}
-        />
-      )}
+      textOnChange={(event: any) => userSpeciesQueryChangedHandler(event)}
+      label="Species Selector"
+      spinner={
+        loading && userSpeciesQuery ? (
+          <CircularProgress color="inherit" size={20} />
+        ) : null
+      }
     />
   );
 }

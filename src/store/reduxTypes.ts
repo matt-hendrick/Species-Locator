@@ -19,7 +19,7 @@ export interface SpeciesSelected {
 }
 
 export interface ReducerState {
-  locationSelected: null | Object;
+  locationSelected: null | object;
   speciesSelected: null | SpeciesSelected;
   userCoordinates: null | Array<number>;
   error: null | string;
@@ -33,7 +33,7 @@ export type UpdateSpeciesSelectedAction = {
 
 export type UpdateLocationSelectedAction = {
   type: 'UPDATE_LOCATION_SELECTED';
-  locationSelected: Object;
+  locationSelected: object;
 };
 
 export type UpdateUserCoordinatesAction = {

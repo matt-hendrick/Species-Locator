@@ -9,6 +9,7 @@ import { useSelector } from 'react-redux';
 import Typography from '@material-ui/core/Typography';
 
 function MapDisplay() {
+  // Google Analytics
   if (window.gtag) {
     window.gtag('config', process.env.REACT_APP_FIREBASE_MEASUREMENT_ID, {
       page_title: document.title,

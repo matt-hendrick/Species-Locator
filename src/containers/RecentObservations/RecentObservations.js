@@ -1,6 +1,9 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import axios from 'axios';
 
+// Utility Functions
+import { toTitleCase } from '../../utility/utilityFunctions';
+
 // Redux
 import { useSelector, useDispatch } from 'react-redux';
 import { updatePageNumber, updateError } from '../../store/actions/actions';
@@ -15,6 +18,7 @@ import Pagination from '@material-ui/lab/Pagination';
 import Card from '../../components/Card/Card';
 
 function RecentObservations() {
+  // Google Analytics
   if (window.gtag) {
     window.gtag('config', process.env.REACT_APP_FIREBASE_MEASUREMENT_ID, {
       page_title: document.title,
@@ -59,65 +63,40 @@ function RecentObservations() {
     if (!speciesSelected && !locationSelected && !userCoordinates) {
       getData(params);
     } else if (speciesSelected && !locationSelected & !userCoordinates) {
-      params = {
-        taxon_id: speciesSelected.id,
-        quality_grade: 'research',
-        order_by: 'observed_on',
-        photos: true,
-        per_page: 16,
-        page: pageNumber,
-      };
+      params = { ...params, taxon_id: speciesSelected.id };
       getData(params);
     } else if (!speciesSelected && locationSelected && locationSelected[0]) {
       params = {
-        taxon_id: 1,
+        ...params,
         lat: locationSelected[0].geometry.location.lat,
         lng: locationSelected[0].geometry.location.lng,
         radius: 50,
-        quality_grade: 'research',
-        order_by: 'observed_on',
-        photos: true,
-        per_page: 16,
-        page: pageNumber,
       };
       getData(params);
     } else if (speciesSelected && locationSelected && locationSelected[0]) {
       params = {
+        ...params,
         taxon_id: speciesSelected.id,
         lat: locationSelected[0].geometry.location.lat,
         lng: locationSelected[0].geometry.location.lng,
         radius: 50,
-        quality_grade: 'research',
-        order_by: 'observed_on',
-        photos: true,
-        per_page: 16,
-        page: pageNumber,
       };
       getData(params);
     } else if (!speciesSelected && userCoordinates) {
       params = {
-        taxon_id: 1,
+        ...params,
         lat: userCoordinates[0],
         lng: userCoordinates[1],
         radius: 50,
-        quality_grade: 'research',
-        order_by: 'observed_on',
-        photos: true,
-        per_page: 16,
-        page: pageNumber,
       };
       getData(params);
     } else if (speciesSelected && userCoordinates) {
       params = {
+        ...params,
         taxon_id: speciesSelected.id,
         lat: userCoordinates[0],
         lng: userCoordinates[1],
         radius: 50,
-        quality_grade: 'research',
-        order_by: 'observed_on',
-        photos: true,
-        per_page: 16,
-        page: pageNumber,
       };
       getData(params);
     }
@@ -128,15 +107,6 @@ function RecentObservations() {
     pageNumber,
     dispatch,
   ]);
-
-  // iNaturalist species names are sometimes lowercase so a title case function is needed to ensure uniformity
-  const toTitleCase = (str) => {
-    str = str.toLowerCase().split(' ');
-    for (var i = 0; i < str.length; i++) {
-      str[i] = str[i].charAt(0).toUpperCase() + str[i].slice(1);
-    }
-    return str.join(' ');
-  };
 
   const handlePageNumberChange = (event, value) => {
     dispatch(updatePageNumber(value));
@@ -168,7 +138,8 @@ function RecentObservations() {
           // nameOfSpecies variable created as some observations initially do not have the correct name (users don't always know the name of the species that they've seen)
           let nameOfSpecies = data.identifications[0].taxon
             .preferred_common_name
-            ? toTitleCase(data.identifications[0].taxon.preferred_common_name)
+            ? // iNaturalist species names are sometimes lowercase so a title case function is needed to ensure uniformity
+              toTitleCase(data.identifications[0].taxon.preferred_common_name)
             : toTitleCase(data.identifications[0].taxon.name);
           // checks to see if a second user provided a name. If so, replaces nameOfSpecies with that name
           if (data.identifications.slice(-1)[0].taxon.preferred_common_name) {

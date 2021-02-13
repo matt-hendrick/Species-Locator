@@ -27,6 +27,7 @@ declare global {
 }
 
 function App() {
+  // Google Analytics
   if (window.gtag && process.env.REACT_APP_FIREBASE_MEASUREMENT_ID) {
     window.gtag('config', process.env.REACT_APP_FIREBASE_MEASUREMENT_ID, {
       page_title: document.title,
