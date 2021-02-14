@@ -16,6 +16,9 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 
 import AutocompleteForm from '../../components/AutocompleteForm/AutocompleteForm';
 
+// Types
+import { SpeciesSelected } from '../../store/reduxTypes';
+
 function SpeciesForm() {
   googleAnalytics();
 
@@ -84,10 +87,11 @@ function SpeciesForm() {
       onClose={() => {
         setOpen(false);
       }}
-      onChange={(option: any, value: any) =>
+      speciesOnChange={(option: any, value: SpeciesSelected | null) =>
         dispatch(updateSpeciesSelected(value))
       }
-      getOptionLabel={(option: any) =>
+      getOptionLabel={(option: SpeciesSelected) =>
+        // added ternary expression below as some species do not have a "preferred common name"
         option.preferred_common_name
           ? option.preferred_common_name
           : option.name
@@ -95,7 +99,9 @@ function SpeciesForm() {
       options={options}
       loading={loading}
       loadingText="Search a species"
-      textOnChange={(event: any) => userSpeciesQueryChangedHandler(event)}
+      textOnChange={(
+        event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+      ) => userSpeciesQueryChangedHandler(event)}
       label="Species Selector"
       spinner={
         loading && userSpeciesQuery ? (

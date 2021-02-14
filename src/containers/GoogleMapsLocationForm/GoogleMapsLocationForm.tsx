@@ -99,7 +99,7 @@ function GoogleMapsLocationForm() {
       onClose={() => {
         setOpen(false);
       }}
-      onChange={(option: any, value: any) => {
+      locationOnChange={(option: any, value: object | null) => {
         dispatch(getCoordinatesFromGeocodeAPI(value));
         setOptions([]);
       }}
@@ -107,7 +107,9 @@ function GoogleMapsLocationForm() {
       options={options}
       loading={loading}
       loadingText="Search a location"
-      textOnChange={(event: any) => userLocationQueryChangedHandler(event)}
+      textOnChange={(
+        event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+      ) => userLocationQueryChangedHandler(event)}
       label="Location Selector"
       spinner={
         loading && userLocationQuery ? (

@@ -4,7 +4,34 @@ import React, { Fragment } from 'react';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 
-function AutocompleteForm(props) {
+// Types
+import { SpeciesSelected } from '../../store/reduxTypes';
+
+interface Props {
+  id: string;
+  open: boolean;
+  onOpen: (event: React.ChangeEvent<{}>) => void;
+  onClose: (event: React.ChangeEvent<{}>) => void;
+  speciesOnChange?: (
+    event: React.ChangeEvent<{}>,
+    value: SpeciesSelected | null
+  ) => void;
+  locationOnChange?: (
+    event: React.ChangeEvent<{}>,
+    value: object | null
+  ) => void;
+  getOptionLabel: (option: never) => string;
+  options: never[];
+  loading: boolean;
+  loadingText: string;
+  textOnChange: (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => void;
+  label: string;
+  spinner: JSX.Element | null;
+}
+
+function AutocompleteForm(props: Props) {
   return (
     <Autocomplete
       id={props.id}
@@ -14,8 +41,7 @@ function AutocompleteForm(props) {
       open={props.open}
       onOpen={props.onOpen}
       onClose={props.onClose}
-      onChange={props.onChange}
-      // added ternary expression below as some species do not have a "preferred common name"
+      onChange={props.speciesOnChange || props.locationOnChange}
       getOptionLabel={props.getOptionLabel}
       options={props.options}
       loading={props.loading}
