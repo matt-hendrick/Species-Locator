@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Fragment } from 'react';
+import React, { useState, useEffect, Fragment, ChangeEvent } from 'react';
 import axios from 'axios';
 
 // Utility Functions
@@ -15,24 +15,94 @@ import Typography from '@material-ui/core/Typography';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Pagination from '@material-ui/lab/Pagination';
 
+// Components
 import Card from '../../components/Card/Card';
+
+// Types
+import { StateProps } from '../../utility/sharedTypes';
+
+interface Params {
+  taxon_id: number;
+  quality_grade: string;
+  order_by: string;
+  photos: boolean;
+  per_page: number;
+  page: number;
+  lat?: number;
+  lng?: number;
+  radius?: number;
+}
+
+interface Data {
+  results: {
+    identifications: {
+      taxon: {
+        preferred_common_name: string;
+        name: string;
+        wikipedia_url: string;
+        wikipediaURL: string | undefined;
+        photos: {
+          id: number;
+          url: string;
+        }[];
+        observedDateTime: string;
+        observationURL: string;
+        observedLocation: string;
+        locationIsObscured: boolean;
+        coordinates: string;
+        title: string;
+        spottedBy: string;
+        spottedByURL: string;
+      };
+    }[];
+    observed_on_string: string;
+    id: number;
+    photos: {
+      id: number;
+      url: string;
+    }[];
+    place_guess: string;
+    obscured: boolean;
+    species_guess: string;
+    user: {
+      name: string;
+      login: string;
+      id: number;
+    };
+  }[];
+  total_results: number;
+}
+[];
+
+interface ObservationData {
+  data: Data;
+}
 
 function RecentObservations() {
   googleAnalytics();
 
-  const [observationData, setObservationData] = useState(null);
-  const [isLoading, setIsLoading] = useState(null);
+  const [
+    observationData,
+    setObservationData,
+  ] = useState<null | ObservationData>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const dispatch = useDispatch();
 
-  const locationSelected = useSelector((state) => state.locationSelected);
-  const speciesSelected = useSelector((state) => state.speciesSelected);
-  const userCoordinates = useSelector((state) => state.userCoordinates);
-  const pageNumber = useSelector((state) => state.pageNumber);
+  const locationSelected = useSelector(
+    (state: StateProps) => state.locationSelected
+  );
+  const speciesSelected = useSelector(
+    (state: StateProps) => state.speciesSelected
+  );
+  const userCoordinates = useSelector(
+    (state: StateProps) => state.userCoordinates
+  );
+  const pageNumber = useSelector((state: StateProps) => state.pageNumber);
 
   useEffect(() => {
     // taxon_id #1 is "Animals". If the taxon_id param is removed, will display all recently observed species (including fungi and plants)
-    let params = {
+    let params: Params = {
       taxon_id: 1,
       quality_grade: 'research',
       order_by: 'observed_on',
@@ -40,12 +110,12 @@ function RecentObservations() {
       per_page: 16,
       page: pageNumber,
     };
-    const getData = (params) => {
+    const getData = (params: Params) => {
       axios
         .get('https://api.inaturalist.org/v1/observations', {
           params: params,
         })
-        .then((response) => {
+        .then((response: ObservationData) => {
           setObservationData(response);
           setIsLoading(false);
         })
@@ -56,7 +126,7 @@ function RecentObservations() {
     setIsLoading(true);
     if (!speciesSelected && !locationSelected && !userCoordinates) {
       getData(params);
-    } else if (speciesSelected && !locationSelected & !userCoordinates) {
+    } else if (speciesSelected && !locationSelected && !userCoordinates) {
       params = { ...params, taxon_id: speciesSelected.id };
       getData(params);
     } else if (!speciesSelected && locationSelected && locationSelected[0]) {
@@ -102,7 +172,10 @@ function RecentObservations() {
     dispatch,
   ]);
 
-  const handlePageNumberChange = (event, value) => {
+  const handlePageNumberChange = (
+    event: ChangeEvent<unknown>,
+    value: number | string
+  ) => {
     dispatch(updatePageNumber(value));
   };
 
@@ -166,7 +239,6 @@ function RecentObservations() {
                 observationURL={`https://www.inaturalist.org/observations/${data.id}`}
                 observedLocation={data.place_guess}
                 locationIsObscured={data.obscured}
-                coordinates={data.location}
                 title={data.species_guess}
                 spottedBy={data.user.name ? data.user.name : data.user.login}
                 spottedByURL={`https://www.inaturalist.org/people/${data.user.id}`}

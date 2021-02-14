@@ -5,7 +5,7 @@ import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 
 // Types
-import { SpeciesSelected } from '../../store/reduxTypes';
+import { SpeciesSelected } from '../../utility/sharedTypes';
 
 interface Props {
   id: string;

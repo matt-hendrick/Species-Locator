@@ -17,7 +17,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import AutocompleteForm from '../../components/AutocompleteForm/AutocompleteForm';
 
 // Types
-import { SpeciesSelected } from '../../store/reduxTypes';
+import { SpeciesSelected } from '../../utility/sharedTypes';
 
 function SpeciesForm() {
   googleAnalytics();

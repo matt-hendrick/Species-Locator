@@ -20,7 +20,6 @@ interface Props {
   observationURL: string;
   observedLocation: string;
   locationIsObscured: boolean;
-  coordinates: string;
   title: string;
   spottedBy: string;
   spottedByURL: string;

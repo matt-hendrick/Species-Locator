@@ -7,7 +7,7 @@ import {
   UpdateSpeciesSelectedAction,
   UpdateUserCoordinatesAction,
   Actions,
-} from './reduxTypes';
+} from '../utility/sharedTypes';
 
 const initialState: ReducerState = {
   locationSelected: null,

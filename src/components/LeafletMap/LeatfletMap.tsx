@@ -7,7 +7,7 @@ import { MapContainer, TileLayer } from 'react-leaflet';
 import Typography from '@material-ui/core/Typography';
 
 // Types
-import { SpeciesSelected } from '../../store/reduxTypes';
+import { SpeciesSelected } from '../../utility/sharedTypes';
 import { LatLngExpression } from 'leaflet';
 
 interface Props {

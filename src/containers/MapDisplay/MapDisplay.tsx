@@ -10,38 +10,8 @@ import { useSelector } from 'react-redux';
 // Components
 import LeatfletMap from '../../components/LeafletMap/LeatfletMap';
 
-interface StateProps {
-  locationSelected: {
-    geometry: {
-      location: {
-        lat: number;
-        lng: number;
-      };
-    };
-    formatted_address: string;
-  }[];
-  speciesSelected: {
-    id: number;
-    preferred_common_name: string;
-    name: string;
-    wikipedia_url: string;
-    wikipediaURL: string | undefined;
-    photos: {
-      id: number;
-      url: string;
-    }[];
-    observedDateTime: string;
-    observationURL: string;
-    observedLocation: string;
-    locationIsObscured: boolean;
-    coordinates: string;
-    title: string;
-    spottedBy: string;
-    spottedByURL: string;
-  };
-  userCoordinates: number[];
-  pageNumber: number;
-}
+// Types
+import { StateProps } from '../../utility/sharedTypes';
 
 function MapDisplay() {
   googleAnalytics();
