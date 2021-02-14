@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import { MapContainer, TileLayer } from 'react-leaflet';
-import * as classes from './MapDisplay.module.css';
+import './MapDisplay.css';
 
 // Utility Functions
 import { googleAnalytics } from '../../utility/utilityFunctions';
@@ -11,16 +11,55 @@ import { useSelector } from 'react-redux';
 // MUI
 import Typography from '@material-ui/core/Typography';
 
+interface StateProps {
+  locationSelected: {
+    geometry: {
+      location: {
+        lat: number;
+        lng: number;
+      };
+    };
+    formatted_address: string;
+  }[];
+  speciesSelected: {
+    id: number;
+    preferred_common_name: string;
+    name: string;
+    wikipedia_url: string;
+    wikipediaURL: string | undefined;
+    photos: {
+      id: number;
+      url: string;
+    }[];
+    observedDateTime: string;
+    observationURL: string;
+    observedLocation: string;
+    locationIsObscured: boolean;
+    coordinates: string;
+    title: string;
+    spottedBy: string;
+    spottedByURL: string;
+  };
+  userCoordinates: number[];
+  pageNumber: number;
+}
+
 function MapDisplay() {
   googleAnalytics();
 
-  const locationSelected = useSelector((state) => state.locationSelected);
-  const speciesSelected = useSelector((state) => state.speciesSelected);
-  const userCoordinates = useSelector((state) => state.userCoordinates);
+  const locationSelected = useSelector(
+    (state: StateProps) => state.locationSelected
+  );
+  const speciesSelected = useSelector(
+    (state: StateProps) => state.speciesSelected
+  );
+  const userCoordinates = useSelector(
+    (state: StateProps) => state.userCoordinates
+  );
 
   let leafletDisplay = null;
   let mapKey = null;
-  let coordinates = ['40.7812', '-73.9665'];
+  let coordinates = [40.7812, -73.9665];
 
   if (!locationSelected && !speciesSelected && !userCoordinates) {
     leafletDisplay = (
@@ -30,9 +69,9 @@ function MapDisplay() {
           observations
         </Typography>
         <MapContainer
-          key={coordinates}
-          className={classes.MapNoInfo}
-          center={coordinates}
+          key={coordinates[0] + coordinates[1]}
+          className="MapNoInfo"
+          center={[coordinates[0], coordinates[1]]}
           zoom={14}
           scrollWheelZoom={false}
         >
@@ -44,12 +83,12 @@ function MapDisplay() {
       </div>
     );
   } else if (speciesSelected && !locationSelected && !userCoordinates) {
-    mapKey = coordinates + speciesSelected.id;
+    mapKey = coordinates.join('') + speciesSelected.id;
     leafletDisplay = (
       <MapContainer
         key={mapKey}
-        className={classes.MapID}
-        center={coordinates}
+        className="MapID"
+        center={[coordinates[0], coordinates[1]]}
         zoom={2}
         scrollWheelZoom={false}
       >
@@ -68,12 +107,12 @@ function MapDisplay() {
       locationSelected[0]?.geometry.location.lat,
       locationSelected[0]?.geometry.location.lng,
     ];
-    mapKey = coordinates + speciesSelected.id;
+    mapKey = coordinates.join('') + speciesSelected.id;
     leafletDisplay = (
       <MapContainer
         key={mapKey}
-        className={classes.MapID}
-        center={coordinates}
+        className="MapID"
+        center={[coordinates[0], coordinates[1]]}
         zoom={14}
         scrollWheelZoom={false}
       >
@@ -99,9 +138,12 @@ function MapDisplay() {
           observations
         </Typography>
         <MapContainer
-          key={mapKey}
-          className={classes.MapID}
-          center={mapKey}
+          key={mapKey.join('')}
+          className="MapID"
+          center={[
+            locationSelected[0]?.geometry.location.lat,
+            locationSelected[0]?.geometry.location.lng,
+          ]}
           zoom={14}
           scrollWheelZoom={false}
         >
@@ -114,12 +156,12 @@ function MapDisplay() {
     );
   } else if (speciesSelected && userCoordinates) {
     coordinates = [userCoordinates[0], userCoordinates[1]];
-    mapKey = coordinates + speciesSelected.id;
+    mapKey = coordinates.join('') + speciesSelected.id;
     leafletDisplay = (
       <MapContainer
         key={mapKey}
-        className={classes.MapID}
-        center={coordinates}
+        className="MapID"
+        center={[coordinates[0], coordinates[1]]}
         zoom={14}
         scrollWheelZoom={false}
       >
@@ -142,9 +184,9 @@ function MapDisplay() {
           observations
         </Typography>
         <MapContainer
-          key={mapKey}
-          className={classes.MapID}
-          center={mapKey}
+          key={mapKey.join('')}
+          className="MapID"
+          center={[userCoordinates[0], userCoordinates[1]]}
           zoom={14}
           scrollWheelZoom={false}
         >

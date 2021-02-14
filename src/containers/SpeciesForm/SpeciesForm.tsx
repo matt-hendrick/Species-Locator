@@ -100,7 +100,7 @@ function SpeciesForm() {
       loading={loading}
       loadingText="Search a species"
       textOnChange={(
-        event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+        event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
       ) => userSpeciesQueryChangedHandler(event)}
       label="Species Selector"
       spinner={

@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, ChangeEvent } from 'react';
 
 // MUI
 import TextField from '@material-ui/core/TextField';
@@ -10,22 +10,19 @@ import { SpeciesSelected } from '../../store/reduxTypes';
 interface Props {
   id: string;
   open: boolean;
-  onOpen: (event: React.ChangeEvent<{}>) => void;
-  onClose: (event: React.ChangeEvent<{}>) => void;
+  onOpen: (event: ChangeEvent<{}>) => void;
+  onClose: (event: ChangeEvent<{}>) => void;
   speciesOnChange?: (
-    event: React.ChangeEvent<{}>,
+    event: ChangeEvent<{}>,
     value: SpeciesSelected | null
   ) => void;
-  locationOnChange?: (
-    event: React.ChangeEvent<{}>,
-    value: object | null
-  ) => void;
+  locationOnChange?: (event: ChangeEvent<{}>, value: object | null) => void;
   getOptionLabel: (option: never) => string;
   options: never[];
   loading: boolean;
   loadingText: string;
   textOnChange: (
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => void;
   label: string;
   spinner: JSX.Element | null;

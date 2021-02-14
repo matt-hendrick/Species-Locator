@@ -108,7 +108,7 @@ function GoogleMapsLocationForm() {
       loading={loading}
       loadingText="Search a location"
       textOnChange={(
-        event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+        event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
       ) => userLocationQueryChangedHandler(event)}
       label="Location Selector"
       spinner={

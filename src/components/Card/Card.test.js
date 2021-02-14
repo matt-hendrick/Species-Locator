@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react';
 import Card from './Card';
 
 test('Card renders with one photo', () => {
-  const container = render(
+  render(
     <Card
       title="test"
       photos={[
@@ -39,7 +39,7 @@ test('Card renders with one photo', () => {
 });
 
 test('Card renders with two photos', () => {
-  const container = render(
+  render(
     <Card
       title="test"
       photos={[
