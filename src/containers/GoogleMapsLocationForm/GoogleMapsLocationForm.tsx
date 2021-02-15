@@ -17,6 +17,9 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 // Components
 import AutocompleteForm from '../../components/AutocompleteForm/AutocompleteForm';
 
+// Types
+import { GoogleMapsAutocompletePrediction } from '../../utility/sharedTypes';
+
 interface Option {
   description: string;
 }
@@ -28,7 +31,9 @@ function GoogleMapsLocationForm() {
     null
   );
   const [open, setOpen] = useState(false);
-  const [options, setOptions] = useState([]);
+  const [options, setOptions] = useState<
+    GoogleMapsAutocompletePrediction[] | []
+  >([]);
   const loading = open && options.length === 0;
 
   const dispatch = useDispatch();
@@ -52,7 +57,9 @@ function GoogleMapsLocationForm() {
               response = data.data.predictions;
 
               if (active && response) {
-                setOptions(response.map((data: object) => data));
+                setOptions(
+                  response.map((data: GoogleMapsAutocompletePrediction) => data)
+                );
               }
             })
             .catch((error) => {
@@ -99,11 +106,16 @@ function GoogleMapsLocationForm() {
       onClose={() => {
         setOpen(false);
       }}
-      locationOnChange={(option: any, value: object | null) => {
+      locationOnChange={(
+        option: any,
+        value: GoogleMapsAutocompletePrediction
+      ) => {
         dispatch(getCoordinatesFromGeocodeAPI(value));
         setOptions([]);
       }}
-      getOptionLabel={(option: Option) => option.description}
+      getOptionLabel={(option: GoogleMapsAutocompletePrediction) =>
+        option.description
+      }
       options={options}
       loading={loading}
       loadingText="Search a location"

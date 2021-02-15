@@ -7,11 +7,11 @@ import { MapContainer, TileLayer } from 'react-leaflet';
 import Typography from '@material-ui/core/Typography';
 
 // Types
-import { SpeciesSelected } from '../../utility/sharedTypes';
+import { iNaturalistSpeciesAutocompleteResult } from '../../utility/sharedTypes';
 import { LatLngExpression } from 'leaflet';
 
 interface Props {
-  speciesSelected?: SpeciesSelected;
+  speciesSelected?: iNaturalistSpeciesAutocompleteResult;
   key: string | number | null | undefined;
   center: LatLngExpression | undefined;
   className: string;

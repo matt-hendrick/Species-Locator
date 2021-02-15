@@ -5,7 +5,10 @@ import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 
 // Types
-import { SpeciesSelected } from '../../utility/sharedTypes';
+import {
+  GoogleMapsAutocompletePrediction,
+  iNaturalistSpeciesAutocompleteResult,
+} from '../../utility/sharedTypes';
 
 interface Props {
   id: string;
@@ -14,11 +17,14 @@ interface Props {
   onClose: (event: ChangeEvent<{}>) => void;
   speciesOnChange?: (
     event: ChangeEvent<{}>,
-    value: SpeciesSelected | null
+    value: iNaturalistSpeciesAutocompleteResult
   ) => void;
-  locationOnChange?: (event: ChangeEvent<{}>, value: object | null) => void;
-  getOptionLabel: (option: never) => string;
-  options: never[];
+  locationOnChange?: (
+    event: ChangeEvent<{}>,
+    value: GoogleMapsAutocompletePrediction
+  ) => void;
+  getOptionLabel: (option: any) => string;
+  options: any[];
   loading: boolean;
   loadingText: string;
   textOnChange: (

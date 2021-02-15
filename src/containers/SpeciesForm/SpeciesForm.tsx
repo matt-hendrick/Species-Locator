@@ -17,14 +17,16 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import AutocompleteForm from '../../components/AutocompleteForm/AutocompleteForm';
 
 // Types
-import { SpeciesSelected } from '../../utility/sharedTypes';
+import { iNaturalistSpeciesAutocompleteResult } from '../../utility/sharedTypes';
 
 function SpeciesForm() {
   googleAnalytics();
 
   const [userSpeciesQuery, setUserSpeciesQuery] = useState<string | null>(null);
   const [open, setOpen] = useState(false);
-  const [options, setOptions] = useState([]);
+  const [options, setOptions] = useState<
+    iNaturalistSpeciesAutocompleteResult[] | []
+  >([]);
   const loading = open && options.length === 0;
 
   const dispatch = useDispatch();
@@ -45,7 +47,11 @@ function SpeciesForm() {
           .then((data) => {
             response = data;
             if (response?.data.results) {
-              setOptions(response.data.results.map((data: object) => data));
+              setOptions(
+                response.data.results.map(
+                  (data: iNaturalistSpeciesAutocompleteResult) => data
+                )
+              );
             }
           })
           .catch((error) => {
@@ -87,10 +93,11 @@ function SpeciesForm() {
       onClose={() => {
         setOpen(false);
       }}
-      speciesOnChange={(option: any, value: SpeciesSelected | null) =>
-        dispatch(updateSpeciesSelected(value))
-      }
-      getOptionLabel={(option: SpeciesSelected) =>
+      speciesOnChange={(
+        option: any,
+        value: iNaturalistSpeciesAutocompleteResult
+      ) => dispatch(updateSpeciesSelected(value))}
+      getOptionLabel={(option: iNaturalistSpeciesAutocompleteResult) =>
         // added ternary expression below as some species do not have a "preferred common name"
         option.preferred_common_name
           ? option.preferred_common_name

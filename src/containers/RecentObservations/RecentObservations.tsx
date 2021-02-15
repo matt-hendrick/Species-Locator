@@ -19,7 +19,7 @@ import Pagination from '@material-ui/lab/Pagination';
 import Card from '../../components/Card/Card';
 
 // Types
-import { StateProps } from '../../utility/sharedTypes';
+import { StateProps, ObservationResult } from '../../utility/sharedTypes';
 
 interface Params {
   taxon_id: number;
@@ -34,43 +34,10 @@ interface Params {
 }
 
 interface Data {
-  results: {
-    identifications: {
-      taxon: {
-        preferred_common_name: string;
-        name: string;
-        wikipedia_url: string;
-        wikipediaURL: string | undefined;
-        photos: {
-          id: number;
-          url: string;
-        }[];
-        observedDateTime: string;
-        observationURL: string;
-        observedLocation: string;
-        locationIsObscured: boolean;
-        coordinates: string;
-        title: string;
-        spottedBy: string;
-        spottedByURL: string;
-      };
-    }[];
-    observed_on_string: string;
-    id: number;
-    photos: {
-      id: number;
-      url: string;
-    }[];
-    place_guess: string;
-    obscured: boolean;
-    species_guess: string;
-    user: {
-      name: string;
-      login: string;
-      id: number;
-    };
-  }[];
+  results: ObservationResult[];
   total_results: number;
+  page: number;
+  per_page: number;
 }
 [];
 
