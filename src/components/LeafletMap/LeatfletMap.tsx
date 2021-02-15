@@ -12,7 +12,7 @@ import { LatLngExpression } from 'leaflet';
 
 interface Props {
   speciesSelected?: iNaturalistSpeciesAutocompleteResult;
-  key: string | number | null | undefined;
+  mapKey: string | number | null | undefined;
   center: LatLngExpression | undefined;
   className: string;
   zoom: number;
@@ -28,7 +28,7 @@ function LeatfletMap(props: Props) {
         </Typography>
       )}
       <MapContainer
-        key={props.key}
+        key={props.mapKey}
         className={props.className}
         center={props.center}
         zoom={props.zoom}

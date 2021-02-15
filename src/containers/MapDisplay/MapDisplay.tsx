@@ -33,7 +33,7 @@ function MapDisplay() {
   if (!locationSelected && !speciesSelected && !userCoordinates) {
     leafletDisplay = (
       <LeatfletMap
-        key={coordinates[0] + coordinates[1]}
+        mapKey={coordinates[0] + coordinates[1]}
         className="MapNoInfo"
         center={[coordinates[0], coordinates[1]]}
         zoom={14}
@@ -43,7 +43,7 @@ function MapDisplay() {
     mapKey = coordinates.join('') + speciesSelected.id;
     leafletDisplay = (
       <LeatfletMap
-        key={mapKey}
+        mapKey={mapKey}
         className="MapID"
         center={[coordinates[0], coordinates[1]]}
         zoom={2}
@@ -58,7 +58,7 @@ function MapDisplay() {
     mapKey = coordinates.join('') + speciesSelected.id;
     leafletDisplay = (
       <LeatfletMap
-        key={mapKey}
+        mapKey={mapKey}
         className="MapID"
         center={[coordinates[0], coordinates[1]]}
         zoom={14}
@@ -72,7 +72,7 @@ function MapDisplay() {
     ];
     leafletDisplay = (
       <LeatfletMap
-        key={mapKey.join('')}
+        mapKey={mapKey.join('')}
         className="MapID"
         center={[
           locationSelected[0]?.geometry.location.lat,
@@ -86,7 +86,7 @@ function MapDisplay() {
     mapKey = coordinates.join('') + speciesSelected.id;
     leafletDisplay = (
       <LeatfletMap
-        key={mapKey}
+        mapKey={mapKey}
         className="MapID"
         center={[coordinates[0], coordinates[1]]}
         zoom={14}
@@ -97,7 +97,7 @@ function MapDisplay() {
     mapKey = [userCoordinates[0], userCoordinates[1]];
     leafletDisplay = (
       <LeatfletMap
-        key={mapKey.join('')}
+        mapKey={mapKey.join('')}
         className="MapID"
         center={[userCoordinates[0], userCoordinates[1]]}
         zoom={14}
