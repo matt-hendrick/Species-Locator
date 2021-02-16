@@ -17,14 +17,6 @@ describe('Recent Observations tests', () => {
     ).toBeInTheDocument();
   });
 
-  it(`Successfully returns observations from iNaturalist API when passed mockLocationSelected
-  and renders cards with data`, async () => {
-    const { findAllByText } = render(<RecentObservations />, {
-      initialState: { locationSelected: mockLocationSelected },
-    });
-    await findAllByText(/spotted by/i);
-  });
-
   it(`Successfully returns observations from iNaturalist API when passed mockSpeciesSelected
   and renders cards with data`, async () => {
     const { findAllByText } = render(<RecentObservations />, {
@@ -37,6 +29,14 @@ describe('Recent Observations tests', () => {
   and renders cards with data`, async () => {
     const { findAllByText } = render(<RecentObservations />, {
       initialState: { userCoordinates: mockUserCoordinates },
+    });
+    await findAllByText(/spotted by/i);
+  });
+
+  it(`Successfully returns observations from iNaturalist API when passed mockLocationSelected
+  and renders cards with data`, async () => {
+    const { findAllByText } = render(<RecentObservations />, {
+      initialState: { locationSelected: mockLocationSelected },
     });
     await findAllByText(/spotted by/i);
   });
