@@ -21,7 +21,7 @@ interface Props {
 function LeatfletMap(props: Props) {
   return (
     <Fragment>
-      {props.speciesSelected && (
+      {!props.speciesSelected && (
         <Typography variant="h6" component="h6" style={{ textAlign: 'center' }}>
           Select a location and a species to view a heatmap of recent
           observations

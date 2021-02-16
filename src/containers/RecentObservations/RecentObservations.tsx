@@ -67,6 +67,20 @@ function RecentObservations() {
   );
   const pageNumber = useSelector((state: StateProps) => state.pageNumber);
 
+  const getData = (params: Params) => {
+    axios
+      .get('https://api.inaturalist.org/v1/observations', {
+        params: params,
+      })
+      .then((response: ObservationData) => {
+        setObservationData(response);
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        dispatch(updateError(error.message));
+      });
+  };
+
   useEffect(() => {
     // taxon_id #1 is "Animals". If the taxon_id param is removed, will display all recently observed species (including fungi and plants)
     let params: Params = {
@@ -76,19 +90,6 @@ function RecentObservations() {
       photos: true,
       per_page: 16,
       page: pageNumber,
-    };
-    const getData = (params: Params) => {
-      axios
-        .get('https://api.inaturalist.org/v1/observations', {
-          params: params,
-        })
-        .then((response: ObservationData) => {
-          setObservationData(response);
-          setIsLoading(false);
-        })
-        .catch((error) => {
-          dispatch(updateError(error.message));
-        });
     };
     setIsLoading(true);
     if (!speciesSelected && !locationSelected && !userCoordinates) {
@@ -131,6 +132,9 @@ function RecentObservations() {
       };
       getData(params);
     }
+    return () => {
+      setIsLoading(false);
+    };
   }, [
     speciesSelected,
     locationSelected,
