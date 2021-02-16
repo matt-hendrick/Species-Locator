@@ -114,6 +114,8 @@ export const mockLocationSelectedData = {
   },
 };
 
+export const mockUserCoordinates = [40.7812, -73.9665];
+
 export const mockObservationData = {
   data: {
     results: [
