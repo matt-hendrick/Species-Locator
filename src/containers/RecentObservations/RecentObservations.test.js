@@ -3,7 +3,7 @@ import { render, cleanup } from '../../utility/testing/reduxTestUtils';
 import RecentObservations from './RecentObservations';
 import {
   mockLocationSelected,
-  mockSpeciesSelectedData,
+  mockSpeciesSelected,
   mockUserCoordinates,
 } from '../../utility/testing/mockData';
 
@@ -28,7 +28,7 @@ describe('Recent Observations tests', () => {
   it(`Successfully returns observations from iNaturalist API when passed mockSpeciesSelected
   and renders cards with data`, async () => {
     const { findAllByText } = render(<RecentObservations />, {
-      initialState: { speciesSelected: mockSpeciesSelectedData },
+      initialState: { speciesSelected: mockSpeciesSelected },
     });
     await findAllByText(/spotted by/i);
   });

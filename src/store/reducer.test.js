@@ -1,13 +1,13 @@
 import reducer, { initialState } from './reducer';
 import * as actionTypes from './actions/actionTypes';
 import {
-  mockSpeciesSelectedData,
-  mockLocationSelectedData,
+  mockSpeciesSelected,
+  mockLocationSelected,
 } from '../utility/testing/mockData';
 
 describe('reducer tests', () => {
   it('UPDATE_SPECIES_SELECTED should update speciesSelected and set pageNumber to null', () => {
-    const newSpeciesSelected = mockSpeciesSelectedData;
+    const newSpeciesSelected = mockSpeciesSelected;
     expect(
       reducer(initialState, {
         type: actionTypes.UPDATE_SPECIES_SELECTED,
@@ -15,7 +15,7 @@ describe('reducer tests', () => {
       })
     ).toEqual({
       locationSelected: null,
-      speciesSelected: mockSpeciesSelectedData,
+      speciesSelected: mockSpeciesSelected,
       userCoordinates: null,
       error: null,
       pageNumber: null,
@@ -23,14 +23,14 @@ describe('reducer tests', () => {
   });
 
   it('UPDATE_LOCATION_SELECTED should update locationSelected and set pageNumber/userCoordinates to null', () => {
-    const newLocationSelected = mockLocationSelectedData;
+    const newLocationSelected = mockLocationSelected;
     expect(
       reducer(initialState, {
         type: actionTypes.UPDATE_LOCATION_SELECTED,
         locationSelected: newLocationSelected,
       })
     ).toEqual({
-      locationSelected: mockLocationSelectedData,
+      locationSelected: mockLocationSelected,
       speciesSelected: null,
       userCoordinates: null,
       error: null,

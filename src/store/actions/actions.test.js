@@ -8,8 +8,8 @@ import {
   updatePageNumber,
 } from './actions';
 import {
-  mockSpeciesSelectedData,
-  mockLocationSelectedData,
+  mockSpeciesSelected,
+  mockLocationSelected,
 } from '../../utility/testing/mockData';
 const middlewares = [thunk];
 const mockStore = configureStore(middlewares);
@@ -19,12 +19,12 @@ describe('actions tests', () => {
     const initialState = {};
     const store = mockStore(initialState);
 
-    store.dispatch(updateSpeciesSelected(mockSpeciesSelectedData));
+    store.dispatch(updateSpeciesSelected(mockSpeciesSelected));
 
     const actions = store.getActions();
     const expectedPayload = {
       type: 'UPDATE_SPECIES_SELECTED',
-      speciesSelected: mockSpeciesSelectedData,
+      speciesSelected: mockSpeciesSelected,
     };
     expect(actions).toEqual([expectedPayload]);
   });
@@ -33,12 +33,12 @@ describe('actions tests', () => {
     const initialState = {};
     const store = mockStore(initialState);
 
-    store.dispatch(updateLocationSelected(mockLocationSelectedData));
+    store.dispatch(updateLocationSelected(mockLocationSelected));
 
     const actions = store.getActions();
     const expectedPayload = {
       type: 'UPDATE_LOCATION_SELECTED',
-      locationSelected: mockLocationSelectedData,
+      locationSelected: mockLocationSelected,
     };
     expect(actions).toEqual([expectedPayload]);
   });

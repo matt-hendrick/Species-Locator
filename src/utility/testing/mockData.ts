@@ -52,7 +52,7 @@ export const mockspeciesSelectedData = {
   preferred_common_name: 'Bears',
 };
 
-export const mockLocationSelectedData = {
+export const mockLocationSelected = {
   0: {
     address_components: [
       {
