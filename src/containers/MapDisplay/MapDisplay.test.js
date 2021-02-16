@@ -4,6 +4,7 @@ import {
   screen,
   cleanup,
   waitFor,
+  waitForElementToBeRemoved,
 } from '../../utility/testing/reduxTestUtils';
 import MapDisplay from './MapDisplay';
 import {
@@ -41,15 +42,16 @@ describe('MapDisplay tests', () => {
 
   it('Renders Leaflet map when passed mockSpeciesSelected', async () => {
     render(<MapDisplay />, {
-      initialState: { speciesSelected: mockSpeciesSelected },
+      initialState: {
+        speciesSelected: mockSpeciesSelected,
+      },
     });
 
     screen.debug();
 
-    const displayedImage = document.querySelector('img');
-    await waitFor(() =>
-      expect(displayedImage.src).toContain(
-        'https://a.tile.openstreetmap.org/14/4825/6155.png'
+    await waitForElementToBeRemoved(() =>
+      screen.queryByText(
+        /Select a location and a species to view a heatmap of recent observations/i
       )
     );
   });
