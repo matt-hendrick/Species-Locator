@@ -1,4 +1,4 @@
-export const speciesSelectedMockData = {
+export const mockspeciesSelectedData = {
   observations_count: 27130,
   taxon_schemes_count: 1,
   ancestry: '48460/1/2/355675/40151/848317/848320/848324/41573',
