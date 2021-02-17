@@ -9,7 +9,6 @@ import {
 import MapDisplay from './MapDisplay';
 import {
   mockLocationSelected,
-  mockSpeciesSelected,
   mockUserCoordinates,
 } from '../../utility/testing/mockData';
 
@@ -27,16 +26,15 @@ describe('MapDisplay tests', () => {
     );
   });
 
-  it('Renders Leaflet map when passed mockLocationSelected', async () => {
+  it('Renders Leaflet map when passed mockLocationSelected', () => {
     render(<MapDisplay />, {
       initialState: { locationSelected: mockLocationSelected },
     });
 
     const displayedImage = document.querySelector('img');
-    await waitFor(() =>
-      expect(displayedImage.src).toContain(
-        'https://a.tile.openstreetmap.org/14/4825/6155.png'
-      )
+
+    expect(displayedImage.src).toContain(
+      'https://a.tile.openstreetmap.org/14/4825/6155.png'
     );
   });
 });

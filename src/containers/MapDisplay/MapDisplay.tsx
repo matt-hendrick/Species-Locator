@@ -8,7 +8,7 @@ import { googleAnalytics } from '../../utility/utilityFunctions';
 import { useSelector } from 'react-redux';
 
 // Components
-import LeatfletMap from '../../components/LeafletMap/LeatfletMap';
+import LeafletMap from '../../components/LeafletMap/LeafletMap';
 
 // Types
 import { StateProps } from '../../utility/sharedTypes';
@@ -32,7 +32,7 @@ function MapDisplay() {
 
   if (!locationSelected && !speciesSelected && !userCoordinates) {
     leafletDisplay = (
-      <LeatfletMap
+      <LeafletMap
         mapKey={coordinates[0] + coordinates[1]}
         className="MapNoInfo"
         center={[coordinates[0], coordinates[1]]}
@@ -42,7 +42,7 @@ function MapDisplay() {
   } else if (speciesSelected && !locationSelected && !userCoordinates) {
     mapKey = coordinates.join('') + speciesSelected.id;
     leafletDisplay = (
-      <LeatfletMap
+      <LeafletMap
         mapKey={mapKey}
         className="MapID"
         center={[coordinates[0], coordinates[1]]}
@@ -57,7 +57,7 @@ function MapDisplay() {
     ];
     mapKey = coordinates.join('') + speciesSelected.id;
     leafletDisplay = (
-      <LeatfletMap
+      <LeafletMap
         mapKey={mapKey}
         className="MapID"
         center={[coordinates[0], coordinates[1]]}
@@ -71,7 +71,7 @@ function MapDisplay() {
       locationSelected[0]?.geometry.location.lng,
     ];
     leafletDisplay = (
-      <LeatfletMap
+      <LeafletMap
         mapKey={mapKey.join('')}
         className="MapID"
         center={[
@@ -85,7 +85,7 @@ function MapDisplay() {
     coordinates = [userCoordinates[0], userCoordinates[1]];
     mapKey = coordinates.join('') + speciesSelected.id;
     leafletDisplay = (
-      <LeatfletMap
+      <LeafletMap
         mapKey={mapKey}
         className="MapID"
         center={[coordinates[0], coordinates[1]]}
@@ -96,7 +96,7 @@ function MapDisplay() {
   } else if (!speciesSelected && userCoordinates) {
     mapKey = [userCoordinates[0], userCoordinates[1]];
     leafletDisplay = (
-      <LeatfletMap
+      <LeafletMap
         mapKey={mapKey.join('')}
         className="MapID"
         center={[userCoordinates[0], userCoordinates[1]]}
