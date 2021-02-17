@@ -39,20 +39,4 @@ describe('MapDisplay tests', () => {
       )
     );
   });
-
-  it('Renders Leaflet map when passed mockSpeciesSelected', async () => {
-    render(<MapDisplay />, {
-      initialState: {
-        speciesSelected: mockSpeciesSelected,
-      },
-    });
-
-    screen.debug();
-
-    await waitForElementToBeRemoved(() =>
-      screen.queryByText(
-        /Select a location and a species to view a heatmap of recent observations/i
-      )
-    );
-  });
 });
