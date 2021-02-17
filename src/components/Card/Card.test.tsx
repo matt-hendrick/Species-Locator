@@ -8,6 +8,7 @@ test('Card renders with one photo', () => {
       title="test"
       photos={[
         {
+          id: 1,
           url: 'https://www.inaturalist.org/photos/106490382?size=square',
         },
       ]}
@@ -18,6 +19,7 @@ test('Card renders with one photo', () => {
       spottedBy="John Doe"
       observationURL="https://www.inaturalist.org/observations/66103148"
       observedDateTime="2020/12/05 7:06 AM AEDT"
+      locationIsObscured={false}
     />
   );
 
@@ -59,6 +61,7 @@ test('Card renders with two photos', () => {
       spottedBy="John Doe"
       observationURL="https://www.inaturalist.org/observations/66103148"
       observedDateTime="2020/12/05 7:06 AM AEDT"
+      locationIsObscured={false}
     />
   );
 

@@ -9,7 +9,7 @@ import {
   Actions,
 } from '../utility/sharedTypes';
 
-const initialState: ReducerState = {
+export const initialState: ReducerState = {
   locationSelected: null,
   speciesSelected: null,
   userCoordinates: null,

@@ -93,7 +93,7 @@ export interface iNaturalistSpeciesAutocompleteResult {
     flags: string[];
     medium_url: string;
     id: number;
-    license_code: string;
+    license_code: string | null;
     original_dimensions: {
       width: number;
       height: number;

@@ -1,3 +1,4 @@
+import React from 'react';
 import { render, screen } from '@testing-library/react';
 import LeafletMap from './LeafletMap';
 import { mockSpeciesSelected } from '../../utility/testing/mockData';
@@ -9,13 +10,12 @@ describe('LeafletMap tests', () => {
     );
     const displayedImage = document.querySelector('img');
 
-    expect(displayedImage.src).toContain(
+    expect(displayedImage?.src).toContain(
       'https://b.tile.openstreetmap.org/14/8328/8146.png'
     );
 
     expect(
-      screen.getByRole(
-        'heading',
+      screen.getByText(
         /Select a location and a species to view a heatmap of recent observations/i
       )
     ).toBeInTheDocument();
@@ -28,7 +28,7 @@ describe('LeafletMap tests', () => {
     );
   });
 
-  it('renders Leaflet map when passed valid props', () => {
+  it('renders Leaflet map when passed valid props (including mockSpeciesSelected data)', () => {
     render(
       <LeafletMap
         mapKey={10}
