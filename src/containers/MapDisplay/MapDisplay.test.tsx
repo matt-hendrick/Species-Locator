@@ -2,6 +2,7 @@ import React from 'react';
 import { render, screen, cleanup } from '../../utility/testing/reduxTestUtils';
 import MapDisplay from './MapDisplay';
 import { mockLocationSelected } from '../../utility/testing/mockData';
+import { initialState } from '../../store/reducer';
 
 describe('MapDisplay tests', () => {
   afterEach(cleanup);
@@ -19,7 +20,7 @@ describe('MapDisplay tests', () => {
 
   it('Renders Leaflet map when passed mockLocationSelected', () => {
     render(<MapDisplay />, {
-      initialState: { locationSelected: mockLocationSelected[0] },
+      initialState: { ...initialState, locationSelected: mockLocationSelected },
     });
 
     const displayedImage = document.querySelector('img');

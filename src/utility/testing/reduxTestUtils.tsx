@@ -3,7 +3,6 @@ import { render as rtlRender } from '@testing-library/react';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import reducer, { initialState } from '../../store/reducer';
-import { ReducerState } from '../sharedTypes';
 
 interface Props {
   children: ReactNode;
@@ -11,7 +10,7 @@ interface Props {
 
 const render = (
   ui: ReactElement,
-  { store = createStore(reducer), ...renderOptions } = {}
+  { store = createStore(reducer), ...renderOptions } = { initialState }
 ) => {
   const Wrapper: FunctionComponent = ({ children }) => {
     return <Provider store={store}>{children}</Provider>;

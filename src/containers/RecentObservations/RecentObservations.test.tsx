@@ -6,6 +6,7 @@ import {
   mockSpeciesSelected,
   mockUserCoordinates,
 } from '../../utility/testing/mockData';
+import { initialState } from '../../store/reducer';
 
 describe('Recent Observations tests', () => {
   afterEach(cleanup);
@@ -20,7 +21,7 @@ describe('Recent Observations tests', () => {
   it(`Successfully returns observations from iNaturalist API when passed mockSpeciesSelected
   and renders cards with data`, async () => {
     const { findAllByText } = render(<RecentObservations />, {
-      initialState: { speciesSelected: mockSpeciesSelected },
+      initialState: { ...initialState, speciesSelected: mockSpeciesSelected },
     });
     await findAllByText(/spotted by/i);
   });
@@ -28,7 +29,7 @@ describe('Recent Observations tests', () => {
   it(`Successfully returns observations from iNaturalist API when passed mockUserCoordinates
   and renders cards with data`, async () => {
     const { findAllByText } = render(<RecentObservations />, {
-      initialState: { userCoordinates: mockUserCoordinates },
+      initialState: { ...initialState, userCoordinates: mockUserCoordinates },
     });
     await findAllByText(/spotted by/i);
   });
@@ -36,7 +37,7 @@ describe('Recent Observations tests', () => {
   it(`Successfully returns observations from iNaturalist API when passed mockLocationSelected
   and renders cards with data`, async () => {
     const { findAllByText } = render(<RecentObservations />, {
-      initialState: { locationSelected: mockLocationSelected },
+      initialState: { ...initialState, locationSelected: mockLocationSelected },
     });
     await findAllByText(/spotted by/i);
   });
