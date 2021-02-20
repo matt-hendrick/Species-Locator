@@ -9,9 +9,13 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Box from '@material-ui/core/Box';
 
+// Components
 import MapDisplay from '../MapDisplay/MapDisplay';
 import RecentObservations from '../RecentObservations/RecentObservations';
 import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
+
+// Utility Functions
+import { googleAnalytics } from '../../utility/utilityFunctions';
 
 interface Props {
   children: ReactNode;
@@ -51,12 +55,7 @@ function a11yProps(index: number) {
 }
 
 function SimpleTabs() {
-  if (window.gtag && process.env.REACT_APP_FIREBASE_MEASUREMENT_ID) {
-    window.gtag('config', process.env.REACT_APP_FIREBASE_MEASUREMENT_ID, {
-      page_title: document.title,
-      page_path: window.location.pathname + window.location.search,
-    });
-  }
+  googleAnalytics();
 
   const [value, setValue] = useState(0);
 
