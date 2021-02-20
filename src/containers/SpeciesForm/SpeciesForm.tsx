@@ -25,7 +25,7 @@ function SpeciesForm() {
   const [userSpeciesQuery, setUserSpeciesQuery] = useState<string | null>(null);
   const [open, setOpen] = useState(false);
   const [options, setOptions] = useState<
-    iNaturalistSpeciesAutocompleteResult[] | []
+    iNaturalistSpeciesAutocompleteResult[]
   >([]);
   const loading = open && options.length === 0;
 

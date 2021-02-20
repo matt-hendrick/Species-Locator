@@ -31,9 +31,9 @@ function GoogleMapsLocationForm() {
     null
   );
   const [open, setOpen] = useState(false);
-  const [options, setOptions] = useState<
-    GoogleMapsAutocompletePrediction[] | []
-  >([]);
+  const [options, setOptions] = useState<GoogleMapsAutocompletePrediction[]>(
+    []
+  );
   const loading = open && options.length === 0;
 
   const dispatch = useDispatch();
