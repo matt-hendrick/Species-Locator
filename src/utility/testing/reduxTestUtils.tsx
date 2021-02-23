@@ -4,10 +4,6 @@ import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import reducer, { initialState } from '../../store/reducer';
 
-interface Props {
-  children: ReactNode;
-}
-
 const render = (
   ui: ReactElement,
   { store = createStore(reducer), ...renderOptions } = { initialState }

@@ -12,11 +12,11 @@ import { updatePageNumber, updateError } from '../../store/actions/actions';
 import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
-import CircularProgress from '@material-ui/core/CircularProgress';
 import Pagination from '@material-ui/lab/Pagination';
 
 // Components
 import Card from '../../components/Card/Card';
+import CardSkeleton from '../../components/CardSkeleton/CardSkeleton';
 
 // Types
 import { StateProps, ObservationResult } from '../../utility/sharedTypes';
@@ -151,22 +151,14 @@ function RecentObservations() {
   };
 
   let display = (
-    <Fragment>
-      <Container style={{ display: 'flex', justifyContent: 'center' }}>
-        <CircularProgress size={100} />
-      </Container>
-      <Container
-        style={{
-          display: 'flex',
-          justifyContent: 'center',
-          paddingTop: '16px',
-        }}
-      >
-        <Typography variant="body1">
-          Loading recent observations from iNaturalist...
-        </Typography>
-      </Container>
-    </Fragment>
+    // init/loading state displays 16 CardSkeletons
+    <Grid container spacing={2}>
+      {Array(16).fill(
+        <Grid item xs={12} sm={6} md={3}>
+          <CardSkeleton />
+        </Grid>
+      )}
+    </Grid>
   );
 
   if (observationData && !isLoading) {
