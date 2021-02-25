@@ -4,11 +4,9 @@ import userEvent from '@testing-library/user-event';
 import Tabs from './Tabs';
 
 describe('Tabs tests', () => {
-  it('On init, renders Tabs with label text for "Recent Observations" and "Heatmap"', () => {
+  it('On init, renders Tabs with label text for "Recent Observations" and "Heatmap"', async () => {
     render(<Tabs />);
-    expect(
-      screen.getByText(/loading recent observations from inaturalist.../i)
-    ).toBeInTheDocument();
+    await screen.findAllByRole('alert');
     expect(screen.getByLabelText(/recent observations/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/heatmap/i)).toBeInTheDocument();
   });

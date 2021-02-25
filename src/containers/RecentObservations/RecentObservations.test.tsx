@@ -1,5 +1,10 @@
 import React from 'react';
-import { render, cleanup } from '../../utility/testing/reduxTestUtils';
+import {
+  render,
+  cleanup,
+  waitForElementToBeRemoved,
+  waitFor,
+} from '../../utility/testing/reduxTestUtils';
 import RecentObservations from './RecentObservations';
 import {
   mockLocationSelected,
@@ -11,11 +16,9 @@ import { initialState } from '../../store/reducer';
 describe('Recent Observations tests', () => {
   afterEach(cleanup);
 
-  it('Renders Recent Observations when passed in blank initialState', () => {
-    const { getByText } = render(<RecentObservations />);
-    expect(
-      getByText(/Loading recent observations from iNaturalist.../i)
-    ).toBeInTheDocument();
+  it('Renders Recent Observations when passed in blank initialState', async () => {
+    const { findAllByRole } = render(<RecentObservations />);
+    await findAllByRole('alert');
   });
 
   it(`Successfully returns observations from iNaturalist API when passed mockSpeciesSelected
@@ -23,7 +26,7 @@ describe('Recent Observations tests', () => {
     const { findAllByText } = render(<RecentObservations />, {
       initialState: { ...initialState, speciesSelected: mockSpeciesSelected },
     });
-    await findAllByText(/spotted by/i);
+    await findAllByText(/spotted by/i), {}, { timeout: 4999 };
   });
 
   it(`Successfully returns observations from iNaturalist API when passed mockUserCoordinates
@@ -31,7 +34,7 @@ describe('Recent Observations tests', () => {
     const { findAllByText } = render(<RecentObservations />, {
       initialState: { ...initialState, userCoordinates: mockUserCoordinates },
     });
-    await findAllByText(/spotted by/i);
+    await findAllByText(/spotted by/i), {}, { timeout: 4999 };
   });
 
   it(`Successfully returns observations from iNaturalist API when passed mockLocationSelected
@@ -39,6 +42,7 @@ describe('Recent Observations tests', () => {
     const { findAllByText } = render(<RecentObservations />, {
       initialState: { ...initialState, locationSelected: mockLocationSelected },
     });
-    await findAllByText(/spotted by/i);
+
+    await findAllByText(/spotted by/i), {}, { timeout: 4999 };
   });
 });

@@ -18,10 +18,12 @@ describe('MapDisplay tests', () => {
     );
   });
 
-  it('Renders Leaflet map when passed mockLocationSelected', () => {
+  it('Renders Leaflet map when passed mockLocationSelected', async () => {
     render(<MapDisplay />, {
       initialState: { ...initialState, locationSelected: mockLocationSelected },
     });
+
+    screen.debug();
 
     const displayedImage = document.querySelector('img');
 
