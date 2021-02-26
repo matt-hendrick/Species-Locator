@@ -13,7 +13,7 @@ export type UpdateSpeciesSelectedAction = {
 
 export type UpdateLocationSelectedAction = {
   type: 'UPDATE_LOCATION_SELECTED';
-  locationSelected: LocationSelected;
+  locationSelected: LocationSelected[];
 };
 
 export type UpdateUserCoordinatesAction = {
@@ -143,7 +143,6 @@ export interface LocationSelected {
   place_id: string;
   types: string[];
 }
-[];
 
 export interface GoogleMapsAutocompletePrediction {
   description: string;
