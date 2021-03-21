@@ -4,11 +4,13 @@ import Skeleton from '@material-ui/lab/Skeleton';
 function CardSkeleton() {
   return (
     <React.Fragment>
-      <Skeleton variant="rect" width={250} height={250} />
-      <Skeleton variant="text" width={200} />
-      <Skeleton variant="text" width={250} />
-      <Skeleton variant="text" width={250} />
-      <Skeleton variant="text" width={250} />
+      <Skeleton variant="rect" height={250} />
+      <div style={{ width: '75%' }}>
+        <Skeleton variant="text" />
+      </div>
+      <Skeleton variant="text" />
+      <Skeleton variant="text" />
+      <Skeleton variant="text" />
     </React.Fragment>
   );
 }
