@@ -4,6 +4,10 @@
 
 Species Locator was built with TypeScript 4.0.5, React 17.0.1, Redux 4.0.5, and Leaflet 1.7.1.
 
+## Test Coverage
+
+75% test coverage via Jest and React Testing Library unit tests.
+
 ## Installation and Setup Instructions
 
 Installation:
