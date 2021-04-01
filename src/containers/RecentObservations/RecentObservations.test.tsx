@@ -1,10 +1,5 @@
 import React from 'react';
-import {
-  render,
-  cleanup,
-  waitForElementToBeRemoved,
-  waitFor,
-} from '../../utility/testing/reduxTestUtils';
+import { render, cleanup } from '../../utility/testing/reduxTestUtils';
 import RecentObservations from './RecentObservations';
 import {
   mockLocationSelected,
