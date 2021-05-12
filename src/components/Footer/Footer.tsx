@@ -9,7 +9,8 @@ function Footer() {
     <Fragment>
       <Typography variant="caption">
         Data pulled from{' '}
-        <Link href="https://www.inaturalist.org"> iNaturalist</Link>
+        <Link href="https://www.inaturalist.org"> iNaturalist's</Link>{' '}
+        <Link href="https://api.inaturalist.org/v1/docs"> API</Link>
       </Typography>
     </Fragment>
   );
