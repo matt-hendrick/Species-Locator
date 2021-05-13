@@ -48,10 +48,8 @@ interface ObservationData {
 function RecentObservations() {
   googleAnalytics();
 
-  const [
-    observationData,
-    setObservationData,
-  ] = useState<null | ObservationData>(null);
+  const [observationData, setObservationData] =
+    useState<null | ObservationData>(null);
   const [isLoading, setIsLoading] = useState(false);
 
   const dispatch = useDispatch();
@@ -152,21 +150,31 @@ function RecentObservations() {
 
   let display = (
     // init/loading state displays 16 CardSkeletons
-    <Grid container spacing={2}>
-      {[...Array(16)].map((x, index) => (
-        <Grid
-          item
-          xs={12}
-          sm={6}
-          md={3}
-          key={index}
-          role="alert"
-          aria-busy="true"
-        >
-          <CardSkeleton />
-        </Grid>
-      ))}
-    </Grid>
+    <>
+      <Typography
+        gutterBottom
+        variant="h6"
+        component="h6"
+        style={{ textAlign: 'center' }}
+      >
+        Fetching data from iNaturalist...
+      </Typography>
+      <Grid container spacing={2}>
+        {[...Array(16)].map((x, index) => (
+          <Grid
+            item
+            xs={12}
+            sm={6}
+            md={3}
+            key={index}
+            role="alert"
+            aria-busy="true"
+          >
+            <CardSkeleton />
+          </Grid>
+        ))}
+      </Grid>
+    </>
   );
 
   if (observationData && !isLoading) {
