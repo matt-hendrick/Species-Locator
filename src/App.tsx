@@ -35,7 +35,7 @@ function App() {
     <Fragment>
       <ThemeProvider>
         <Navbar />
-        <Container className="App">
+        <Container className="app">
           <Container>
             <SpeciesForm />
             <GoogleMapsLocationForm />

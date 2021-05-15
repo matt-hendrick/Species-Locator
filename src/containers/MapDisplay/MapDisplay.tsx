@@ -34,7 +34,7 @@ function MapDisplay() {
     leafletDisplay = (
       <LeafletMap
         mapKey={coordinates[0] + coordinates[1]}
-        className="MapNoInfo"
+        className="map-no-info"
         center={[coordinates[0], coordinates[1]]}
         zoom={14}
       />
@@ -44,7 +44,7 @@ function MapDisplay() {
     leafletDisplay = (
       <LeafletMap
         mapKey={mapKey}
-        className="MapID"
+        className="map-id"
         center={[coordinates[0], coordinates[1]]}
         zoom={2}
         speciesSelected={speciesSelected}
@@ -59,7 +59,7 @@ function MapDisplay() {
     leafletDisplay = (
       <LeafletMap
         mapKey={mapKey}
-        className="MapID"
+        className="map-id"
         center={[coordinates[0], coordinates[1]]}
         zoom={14}
         speciesSelected={speciesSelected}
@@ -73,7 +73,7 @@ function MapDisplay() {
     leafletDisplay = (
       <LeafletMap
         mapKey={mapKey.join('')}
-        className="MapID"
+        className="map-id"
         center={[
           locationSelected[0]?.geometry.location.lat,
           locationSelected[0]?.geometry.location.lng,
@@ -87,7 +87,7 @@ function MapDisplay() {
     leafletDisplay = (
       <LeafletMap
         mapKey={mapKey}
-        className="MapID"
+        className="map-id"
         center={[coordinates[0], coordinates[1]]}
         zoom={14}
         speciesSelected={speciesSelected}
@@ -98,7 +98,7 @@ function MapDisplay() {
     leafletDisplay = (
       <LeafletMap
         mapKey={mapKey.join('')}
-        className="MapID"
+        className="map-id"
         center={[userCoordinates[0], userCoordinates[1]]}
         zoom={14}
       />

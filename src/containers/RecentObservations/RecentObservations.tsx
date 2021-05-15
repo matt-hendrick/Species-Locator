@@ -157,7 +157,7 @@ function RecentObservations() {
         variant="h6"
         component="h6"
         color="primary"
-        className="loading-text"
+        className="text-align-center"
       >
         Fetching data from iNaturalist...
       </Typography>

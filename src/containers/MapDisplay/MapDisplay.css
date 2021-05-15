@@ -1,17 +1,17 @@
-.MapID {
+.map-id {
   height: 67vh;
 }
 
-.MapNoInfo {
+.map-no-info {
   height: 50vh;
 }
 
 @media only screen and (max-width: 600px) {
-  .MapID {
+  .map-id {
     height: 50vh;
   }
 
-  .MapNoInfo {
+  .map-no-info {
     height: 40vh;
   }
 }
