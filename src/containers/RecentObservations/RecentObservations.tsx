@@ -1,5 +1,6 @@
 import React, { useState, useEffect, Fragment, ChangeEvent } from 'react';
 import axios from 'axios';
+import './RecentObservations.css';
 
 // Utility Functions
 import { toTitleCase, googleAnalytics } from '../../utility/utilityFunctions';
@@ -155,7 +156,8 @@ function RecentObservations() {
         gutterBottom
         variant="h6"
         component="h6"
-        style={{ textAlign: 'center' }}
+        color="primary"
+        className="loading-text"
       >
         Fetching data from iNaturalist...
       </Typography>
@@ -279,11 +281,7 @@ function RecentObservations() {
             }
             color="primary"
             onChange={handlePageNumberChange}
-            style={{
-              display: 'flex',
-              justifyContent: 'center',
-              paddingTop: '8px',
-            }}
+            className="pagination"
             // if pageNumber is null, sets page to 1. Ensures that page 1 is correctly highlighted on initial search
             page={pageNumber ? pageNumber : 1}
           />
