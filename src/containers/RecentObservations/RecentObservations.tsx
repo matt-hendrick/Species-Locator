@@ -233,7 +233,7 @@ function RecentObservations() {
     if (!observationData.data.results[0]) {
       if (locationSelected) {
         display = (
-          <Typography gutterBottom variant="h4" component="h4">
+          <Typography gutterBottom variant="h4" component="h4" color="primary">
             No recent observations
             {speciesSelected
               ? ` of ${
@@ -248,7 +248,7 @@ function RecentObservations() {
         );
       } else if (userCoordinates) {
         display = (
-          <Typography gutterBottom variant="h4" component="h4">
+          <Typography gutterBottom variant="h4" component="h4" color="primary">
             No recent observations{' '}
             {speciesSelected
               ? ` of ${
@@ -257,8 +257,8 @@ function RecentObservations() {
                     : speciesSelected.name
                 }`
               : null}{' '}
-            found within 50 kilometers of your location ({userCoordinates[0]},{' '}
-            {userCoordinates[1]}).
+            found within 50 kilometers of your coordinates (
+            {userCoordinates[0].toFixed(2)}, {userCoordinates[1].toFixed(2)}).
           </Typography>
         );
       }
