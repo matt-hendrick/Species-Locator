@@ -5,7 +5,7 @@ import Footer from './Footer';
 describe('LeafletMap tests', () => {
   it('renders iNaturalist link', () => {
     render(<Footer />);
-    expect(screen.getByText('iNaturalist').closest('a')).toHaveAttribute(
+    expect(screen.getByText("iNaturalist's").closest('a')).toHaveAttribute(
       'href',
       'https://www.inaturalist.org'
     );
