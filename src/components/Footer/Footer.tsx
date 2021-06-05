@@ -10,7 +10,10 @@ function Footer() {
       <Typography variant="caption">
         Data pulled from{' '}
         <Link href="https://www.inaturalist.org"> iNaturalist's</Link>{' '}
-        <Link href="https://api.inaturalist.org/v1/docs"> API</Link>
+        <Link href="https://api.inaturalist.org/v1/docs"> API</Link> - View on{' '}
+        <Link href="https://github.com/matt-hendrick/Species-Locator">
+          GitHub
+        </Link>
       </Typography>
     </Fragment>
   );
