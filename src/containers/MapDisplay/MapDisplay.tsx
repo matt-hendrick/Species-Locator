@@ -11,7 +11,12 @@ import { useSelector } from 'react-redux';
 import LeafletMap from '../../components/LeafletMap/LeafletMap';
 
 // Types
-import { StateProps } from '../../utility/sharedTypes';
+import {
+  iNaturalistSpeciesAutocompleteResult,
+  LocationSelected,
+  SpeciesSelected,
+  StateProps,
+} from '../../utility/sharedTypes';
 
 function MapDisplay() {
   googleAnalytics();
@@ -30,6 +35,8 @@ function MapDisplay() {
   let mapKey: string | number[] | null = null;
   let coordinates = [40.7812, -73.9665];
 
+  // each if/else if block below determines how the leaflet map is displayed
+  // the display varies depending on whether or not the user has specified a species, specified a location, or provided their own coordinates
   if (!locationSelected && !speciesSelected && !userCoordinates) {
     leafletDisplay = (
       <LeafletMap
