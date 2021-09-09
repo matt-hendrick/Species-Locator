@@ -5,14 +5,14 @@ import { Provider } from 'react-redux';
 import reducer from '../../store/reducer';
 
 function render(
-  ui,
+  ui: React.ReactElement,
   {
     initialState,
     store = createStore(reducer, initialState),
     ...renderOptions
-  } = {}
+  }: any = {}
 ) {
-  function Wrapper({ children }) {
+  function Wrapper({ children }: any) {
     return <Provider store={store}>{children}</Provider>;
   }
   return rtlRender(ui, { wrapper: Wrapper, ...renderOptions });
